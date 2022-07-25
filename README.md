@@ -1,6 +1,6 @@
 # fastapi-starter-boiler-plate
 A starter boiler plate pack for developing apllications with FAST API 
-This Boilerplate has basics utililities of software and saves the usersome development hassle.
+This Boilerplate has basics utililities of software and saves the user some development hassle.
 
 ## Features includes:
 
@@ -21,7 +21,7 @@ This Boilerplate has basics utililities of software and saves the usersome devel
 
 1. Install fastapi and uvicorn server:
 ```bash 
-install "fastapi[all]"
+pip install "fastapi[all]"
 ```
 
 2. Install SQLAlchemy for ORM management
@@ -38,14 +38,14 @@ pip install alembic
 ```
 5. Install Requirements
 ```bash
-pip3 install -r requirement.txt
+pip install -r requirement.txt
 ```
 
 
 ## B. Start Application
 
 1. Create database for application: eg. fastapi_starter_pack 
-note: (do not create tables,running migrations willdo that)
+note: (do not create tables,running migrations will do that)
 
 2. Run database migrations
 ```bash
@@ -62,5 +62,6 @@ uvicorn main:app --reload
 ```
 
 6. visit url in browser
-127.0.0.1:8000  
-127.0.0.1:8000/docs
+
+      127.0.0.1:8000,  
+      127.0.0.1:8000/docs
