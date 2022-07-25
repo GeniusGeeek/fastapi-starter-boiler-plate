@@ -1,3 +1,4 @@
+![License](https://img.shields.io/badge/license-MIT-green) <img src="https://img.shields.io/circleci/project/github/badges/shields/master" alt="build status">
 # fastapi-starter-boiler-plate
 A starter boiler plate pack for developing apllications with FAST API 
 This Boilerplate has basics utililities of software and saves the user some development hassle.
