@@ -20,6 +20,14 @@ This Boilerplate has basics utililities of software and saves the user some deve
 ## A. REQUIMENTS
 #Python 3.6 and greater
 
+In project directory run the following two commands to create a virtual environment
+```bash
+python3 -m venv .env 
+```
+```bash
+source .env/bin/activate
+```
+
 1. Install fastapi and uvicorn server:
 ```bash 
 pip install "fastapi[all]"
@@ -37,7 +45,7 @@ pip install mysql-connector-python
 ```bash 
 pip install alembic
 ```
-5. Install Requirements
+5. Install other Requirements
 ```bash
 pip install -r requirement.txt
 ```
