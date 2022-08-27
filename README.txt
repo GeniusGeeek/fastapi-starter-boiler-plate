@@ -3,6 +3,10 @@ RUN THE FOLLOWING COMMANDS TO GET STARTED:
 A. REQUIMENTS
 Python 3.6 and greater
 
+In project directory run the following two commands to create a virtual environment
+**python3 -m venv .env 
+**source .env/bin/activate  
+
 1. Install fastapi and uvicorn server:
 ** pip3 install "fastapi[all]"
 
