@@ -11,6 +11,7 @@ This Boilerplate has basics utililities of software and saves the user some deve
 - Reset Password
 - Forgot Password
 - Authentication (JWT)
+- Google Authentication
 - Email Sending
 - Password hashing
 - User Account hashing 
