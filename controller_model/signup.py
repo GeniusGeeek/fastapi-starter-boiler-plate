@@ -33,6 +33,25 @@ def create_user(user_details: schema_model.User, db: Session):
     return {"message":"Registeration successful"}
 
 
+def create_user_from_google_auth(user_details, db: Session):
+    rand_num = random.randint(100000, 999999)
+    account_hash_str = str(time.time()) + str(rand_num)
+    account_hash = app.generate_account_hash(account_hash_str) #used for password reset 
+    receiver_email = user_details.email
+    add_user = orm_model.User(
+        username=user_details.username,
+        email=user_details.email,
+        name=user_details.name,
+        account_hash=account_hash
+    )
+    db.add(add_user)
+    db.commit()
+    db.refresh(add_user)
+    send_mail(receiver_email)
+    return {"message":"Registeration successful"}
+   
+
+
 def check_email_exist(db: Session, email: str):
     return db.query(orm_model.User).filter(orm_model.User.email == email).first()
 
