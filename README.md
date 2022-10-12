@@ -63,7 +63,7 @@ alembic revision --autogenerate -m "initial setup"
 alembic upgrade head
 ```
 
-3. OPTIONAL: change DB url definations if needed according to your db name and settings
+3. OPTIONAL: change DB url definations in database_conn.py and alembic.ini if needed according to your db name and settings
 
 
 4. Run Application
