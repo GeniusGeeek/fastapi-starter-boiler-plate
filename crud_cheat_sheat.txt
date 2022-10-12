@@ -1,0 +1,78 @@
+
+
+
+docs: https://www.tutorialspoint.com/sqlalchemy/sqlalchemy_orm_filter_operators.htm
+
+
+
+#READ/SELECT single data: return result object of table equal condition (single row)
+   data = db.query(orm_model.modelName).filter(orm_model.modelName.property == condition).first()
+     return data
+     //if data is None:
+#READ/SELECT multiple data: return result object of table equal condition (multiple rows)
+    userId = auth_user.get('sub') // get id of authenticated user
+     data =  db.query(orm_model.modelName).filter(orm_model.modelName.property == condition).all()
+      //return data
+      //if data is None:
+
+#INSERT/CREATE DATE
+data_to_add = orm_model.table(
+        column=data,
+        column=data,
+        column=data
+        
+    )
+    db.add(data_to_add)
+     db.commit()
+    db.refresh(data_to_add)
+
+#UPDATE DATA
+
+     try:
+     data = db.query(orm_model.modelName).filter(orm_model.modelName.property == condition).first()
+       
+        data.column_to_update = newData
+        data.column_to_update1 = newData1
+
+        db.commit()
+        db.refresh(data)
+
+      except Exception as e:
+        return {"message": "An error occured: "+ str(e)}   
+
+
+ #DELETE DATA
+     data = db.query(orm_model.modelName).filter(orm_model.modelName.property == condition).first()
+       
+        if data is None:
+           return {not found}
+
+        else:
+        db.delete(data)
+        db.commit()      
+
+#LIKE statment
+result = db.query(orm_model.modelName).filter(orm_model.modelName.property.like('Ra%'))
+for row in result:
+   print ("ID:", row.id, "Name: ",row.name, "Address:",row.address, "Email:",row.email)
+    
+
+#AND condition(seperated by comma)
+result = session.query(orm_model.modelName).filter(orm_model.modelName.property>2, Customers.name.like('Ra%'))
+for row in result:
+   print ("ID:", row.id, "Name: ",row.name, "Address:",row.address, "Email:",row.email)
+
+
+#OR condtion (using the _or() method)
+result = session.query(orm_model.modelName).filter(or_(orm_model.modelName.property>2, Customers.name.like('Ra%')))
+
+for row in result:
+   print ("ID:", row.id, "Name: ",row.name, "Address:",row.address, "Email:",row.email)
+
+
+#IN statment
+
+result = session.query(orm_model.modelName).filter(orm_model.modelName.property.in_([1,3]))
+for row in result:
+   print ("ID:", row.id, "Name: ",row.name, "Address:",row.address, "Email:",row.email)
+
