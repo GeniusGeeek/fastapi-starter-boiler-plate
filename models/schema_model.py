@@ -6,8 +6,7 @@ class User(BaseModel):
       name: str
       username:str 
       password:str 
-      usdt_wallet_addr :str 
-      eth_wallet_addr :str 
+      
      
 
 class user_login(BaseModel):
