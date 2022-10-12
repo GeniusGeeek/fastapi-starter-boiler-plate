@@ -75,4 +75,16 @@ for row in result:
 result = session.query(orm_model.modelName).filter(orm_model.modelName.property.in_([1,3]))
 for row in result:
    print ("ID:", row.id, "Name: ",row.name, "Address:",row.address, "Email:",row.email)
+   
+   
+#COUNT Number of ROW In table (eg user table)
+
+ data = db.query(orm_model.User).count()
+    return data
+
+#SUM VALUES IN A TABLE COLUMN (eg. is_admin column in User table)
+    data = db.query(functions.sum(orm_model.User.is_admin)).scalar()
+    return data
+  
+   
 
