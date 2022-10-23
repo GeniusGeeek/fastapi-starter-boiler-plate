@@ -20,8 +20,13 @@ This Boilerplate has basics utililities needed for building REST APIs without mu
 
 ## Installation
 
+```bash
+git clone https://github.com/GeniusGeeek/fastapi-starter-boiler-plate.git
+```
+
 ## A. REQUIMENTS
 #Python 3.6 and greater
+
 
 In project directory run the following two commands to create a virtual environment
 ```bash
