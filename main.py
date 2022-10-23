@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 
-from controller_routes import protected_route, fileUpload, signup, signin, forget_password, reset_password
+from controller_routes import protected_route, app_utils, signup, signin, forget_password, reset_password
 from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
@@ -10,7 +10,7 @@ app.include_router(signin.router)
 app.include_router(protected_route.router)
 app.include_router(forget_password.router)
 app.include_router(reset_password.router)
-app.include_router(fileUpload.router)
+app.include_router(app_utils.router)
 
 
 
