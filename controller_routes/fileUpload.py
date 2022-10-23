@@ -1,7 +1,6 @@
 from myutils.master_imports import *
 
 from myutils.app import auth_user_request, upload_file
-from controller_model import educationModel
 from fastapi import Form
 
 
