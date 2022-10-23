@@ -10,11 +10,13 @@ This Boilerplate has basics utililities needed for building REST APIs without mu
 - CORS
 - Reset Password
 - Forgot Password
-- Authentication (JWT)
+- Authentication and Protected Routes (JWT)
 - Google Authentication
 - Email Sending
 - Password hashing
-- User Account hashing 
+- User Account hashing
+- File Upload
+ 
 
 ## Installation
 
