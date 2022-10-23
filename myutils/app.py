@@ -39,6 +39,20 @@ def create_jwt_token(data: dict, expires_delta: Optional[timedelta]= None):
     encoded_jwt_data = jwt.encode(data_to_encode, SECRET_KEY, algorithm= ALGORITHM)
     return encoded_jwt_data
 
+def upload_file(file:UploadFile):
+    try:
+        file_contents = file.file.read()
+        destination_path = "uploads/"
+        with open(destination_path+file.filename, 'wb') as buffer:
+            buffer.write(file_contents)
+            return {"message":"success","file_path":destination_path+file.filename}
+
+    except Exception as e:
+        return {"message":e}
+     
+    finally:
+        file.file.close()
+
 
 def auth_user_request(token: str = Depends(outh2_scheme)):
     credentials_exception = HTTPException(
