@@ -14,6 +14,11 @@ docs: https://www.tutorialspoint.com/sqlalchemy/sqlalchemy_orm_filter_operators.
      data =  db.query(orm_model.modelName).filter(orm_model.modelName.property == condition).all()
       //return data
       //if data is None:
+      
+#READ/SELECT multiple data: return all result object of table without any condition(multiple rows)
+     data =  db.query(orm_model.modelName).all()
+     return data
+      
 
 #INSERT/CREATE DATE
 data_to_add = orm_model.table(
