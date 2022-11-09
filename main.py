@@ -3,7 +3,7 @@ from fastapi import FastAPI
 from controller_routes import authenticated_route, app_utils, signup, signin, forget_password, reset_password
 from fastapi.middleware.cors import CORSMiddleware
 
-app = FastAPI()
+app = FastAPI(title="FASTAPI STARTER BOILER PLATE")
 
 app.include_router(signup.router)
 app.include_router(signin.router)
