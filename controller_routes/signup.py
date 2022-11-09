@@ -15,7 +15,7 @@ router = APIRouter()
 
 
 
-@router.post('/signup')
+@router.post('/signup',tags=["Account auth"])
 def register(user: schema_model.User, db: Session = Depends(get_db)):
     create_user = signup.check_email_exist(db, user.email)
     if(create_user):
@@ -23,7 +23,7 @@ def register(user: schema_model.User, db: Session = Depends(get_db)):
     else:
         return signup.create_user(user, db)
 
-@router.post('/gmail_auth_signup/{token_id}')
+@router.post('/gmail_auth_signup/{token_id}', tags=["Account auth"])
 def gmail_register(token_id: str, db: Session = Depends(get_db)):
     response = requests.get("https://oauth2.googleapis.com/tokeninfo?id_token="+ token_id)
     res = response.json()
