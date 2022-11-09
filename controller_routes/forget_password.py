@@ -9,7 +9,7 @@ from myutils import app
 
 router = APIRouter()
 
-@router.post("/forget_password", summary="user forget password" )
+@router.post("/forget_password", summary="user forget password",tags=["Account auth"] )
 def post_data(post_data_in: schema_model.forgotPassword, db: Session = Depends(get_db)):
   check_email = signin.login_email(post_data_in.email, db)
   reset_code = check_email.account_hash
