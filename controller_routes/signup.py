@@ -15,7 +15,7 @@ router = APIRouter()
 
 
 
-@router.post('/signup',tags=["Account auth"])
+@router.post('/signup',tags=["User Account"])
 def register(user: schema_model.User, db: Session = Depends(get_db)):
     create_user = signup.check_email_exist(db, user.email)
     if(create_user):
