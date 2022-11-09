@@ -14,7 +14,7 @@ ACCESS_TOKEN_EXPIRE_MINUTES = 60 * 24 * 300
 
 router = APIRouter()
 
-@router.post("/signin", summary="user login",tags=["Account auth"] )
+@router.post("/signin", summary="user login",tags=["User Account"] )
 def login(user_login_details: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(get_db)):
   login_user = signin.login_email(user_login_details.username,db)
   #return login_user
