@@ -10,6 +10,8 @@ from datetime import datetime, timedelta
 from typing import Optional
 from fastapi.security import  OAuth2PasswordBearer
 import hashlib
+from sqlalchemy.orm import Session
+from models import orm_model, schema_model
 
 outh2_scheme = OAuth2PasswordBearer(tokenUrl="signin")
 
@@ -103,3 +105,8 @@ def send_mail(server,sender,password,receipient,message, subject):
 def generate_account_hash(unique_Str):
     result = hashlib.md5(unique_Str.encode())
     return result.hexdigest()
+
+
+def getUserDetails(userId: str, detail: str, db: Session):
+    data = db.query(orm_model.User).filter(orm_model.User.id == userId).first()
+    return getattr(data, detail)
