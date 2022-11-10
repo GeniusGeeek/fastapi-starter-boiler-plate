@@ -21,7 +21,7 @@ class forgotPassword(BaseModel):
 
 class resetPassword(BaseModel):
     email: str = Field(example="foomail@mail.com")
-    reset_code: str = Field(example="1111")
+    reset_code: str = Field(example="nskdnsdksdn223eee")
     new_password:str = Field(example="newPassword")
       
       
