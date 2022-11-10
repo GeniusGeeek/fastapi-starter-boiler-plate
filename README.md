@@ -11,6 +11,7 @@ This Boilerplate has basics utililities needed for building REST APIs without mu
 - Reset Password
 - Forgot Password
 - Authentication and Protected Routes (JWT)
+- Getting Autheticated User Details
 - Google Authentication
 - Email Sending
 - Password hashing
