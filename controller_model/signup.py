@@ -44,7 +44,7 @@ def sendVerifyModel(email, db):
 
 def VerifyAcctModel(email, email_otp, db):
     try:
-         data = db.query(orm_model.User).filter(orm_model.User.email == user_details.email).first()
+         data = db.query(orm_model.User).filter(orm_model.User.email == email).first()
          if (email_otp == data.email_otp):
              data.account_verified = 1
 
