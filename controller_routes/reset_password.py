@@ -10,10 +10,13 @@ from myutils import app
 
 router = APIRouter()
 
-@router.post("/reset_password", summary="user reset password",tags=["User Account"])
+
+@router.post("/reset_password", summary="user reset password", tags=["User Account"])
 def post_data(post_data_in: schema_model.resetPassword, db: Session = Depends(get_db)):
   check_email = signin.login_email(post_data_in.email, db)
-  reset_code = check_email.account_hash
+  #reset_code = check_email.account_hash
+  reset_code = check_email.email_otp
+
 
   if(check_email):
     if(post_data_in.reset_code == reset_code):
