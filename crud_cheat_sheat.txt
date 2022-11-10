@@ -3,7 +3,7 @@
 
 docs: https://www.tutorialspoint.com/sqlalchemy/sqlalchemy_orm_filter_operators.htm
 
-
+  return data
 
 #READ/SELECT single data: return result object of table equal condition (single row)
    data = db.query(orm_model.modelName).filter(orm_model.modelName.property == condition).first()
@@ -14,7 +14,7 @@ docs: https://www.tutorialspoint.com/sqlalchemy/sqlalchemy_orm_filter_operators.
      data =  db.query(orm_model.modelName).filter(orm_model.modelName.property == condition).all()
       //return data
       //if data is None:
-      
+
 #READ/SELECT multiple data: return all result object of table without any condition(multiple rows)
      data =  db.query(orm_model.modelName).all()
      return data
@@ -35,12 +35,16 @@ data_to_add = orm_model.table(
 
      try:
      data = db.query(orm_model.modelName).filter(orm_model.modelName.property == condition).first()
-       
-        data.column_to_update = newData
-        data.column_to_update1 = newData1
+        if(data is not None):
 
-        db.commit()
-        db.refresh(data)
+            data.column_to_update = newData
+            data.column_to_update1 = newData1
+
+            db.commit()
+            db.refresh(data)
+            return {"Message": "Unique Id not found"}
+       else:
+            return {"message": "condition not found"}   
 
       except Exception as e:
         return {"message": "An error occured: "+ str(e)}   
@@ -80,8 +84,7 @@ for row in result:
 result = session.query(orm_model.modelName).filter(orm_model.modelName.property.in_([1,3]))
 for row in result:
    print ("ID:", row.id, "Name: ",row.name, "Address:",row.address, "Email:",row.email)
-   
-   
+
 #COUNT Number of ROW In table (eg user table)
 
  data = db.query(orm_model.User).count()
@@ -90,6 +93,5 @@ for row in result:
 #SUM VALUES IN A TABLE COLUMN (eg. is_admin column in User table)
     data = db.query(functions.sum(orm_model.User.is_admin)).scalar()
     return data
-  
-   
+
 
