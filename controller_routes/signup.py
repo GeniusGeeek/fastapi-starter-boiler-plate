@@ -33,7 +33,7 @@ def sendVerify(email: str, db: Session = Depends(get_db)):
         return signup.sendVerifyModel(email, db)
     
 @router.post('/verify_account',tags=["User Account"])
-def VerifyAcct(email: str, email_otp:str, db: Session = Depends(get_db)):
+def VerifyAcct(email: str, email_otp:int, db: Session = Depends(get_db)):
     create_user = signup.check_email_exist(db, email)
     if(create_user):
         raise HTTPException(status_code=400, detail="Email already registered")
