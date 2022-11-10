@@ -19,6 +19,7 @@ def create_user(user_details: schema_model.User, db: Session):
     account_hash_str = str(time.time()) + str(rand_num)
     account_hash = app.generate_account_hash(account_hash_str) #used for password reset 
     receiver_email = user_details.email
+    otp_toSend = random.randint(1000,9999)
     add_user = orm_model.User(
         hashed_password=app.hash_password(user_details.password),
         username=user_details.username,
@@ -29,10 +30,40 @@ def create_user(user_details: schema_model.User, db: Session):
     db.add(add_user)
     db.commit()
     db.refresh(add_user)
-    send_mail(receiver_email)
+    #send_mail(receiver_email)
+    app.send_mail("mailServer", "sender", "password", receiver_email,"Welcome, Use the following OTP to verify your account, OTP: "+str(otp_toSend), "Welcome to Fast API")
     return {"message":"Registeration successful"}
 
 
+def sendVerifyModel(email, db):
+    receiver_email = email
+    otp_toSend = random.randint(1000,9999)
+    app.send_mail("mailServer", "sender", "password", receiver_email,"Hi, Use the following OTP to verify your account, OTP: "+str(otp_toSend), "FAST API Verify Account")
+    return {"message":"Verification Code sent successfully"}
+
+
+def VerifyAcctModel(email, email_otp, db):
+    try:
+         data = db.query(orm_model.User).filter(orm_model.User.email == user_details.email).first()
+         if (email_otp == data.email_otp):
+             data.account_verified = 1
+
+             db.commit()
+             db.refresh(data)
+             
+             
+             
+             return {"status":"success","message":"Verified Successfully"}
+         else:
+            return {"message": "Email and Account verification failed, Wrong OTP"}
+
+
+
+     except Exception as e:
+        return {"message": "An error occured: "+ str(e)}   
+
+
+    
 def create_user_from_google_auth(user_details, db: Session):
     rand_num = random.randint(100000, 999999)
     account_hash_str = str(time.time()) + str(rand_num)
@@ -47,7 +78,8 @@ def create_user_from_google_auth(user_details, db: Session):
     db.add(add_user)
     db.commit()
     db.refresh(add_user)
-    send_mail(receiver_email)
+    #send_mail(receiver_email)
+    app.send_mail("mailServer", "sender", "password", receiver_email,"Welcome, Use the following OTP to verify your account, OTP: "+str(otp_toSend), "Welcome to Fast API")
     return {"message":"Registeration successful"}
    
 
