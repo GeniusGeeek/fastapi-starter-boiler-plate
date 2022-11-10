@@ -12,6 +12,8 @@ class User(Base):
       is_admin = Column(Boolean, default=False)
       account_verified = Column(Boolean, default=0, server_default=str(0), nullable=False)
       account_hash = Column(String(255))
+      email_otp = Column(Integer)
+
 
 
 
