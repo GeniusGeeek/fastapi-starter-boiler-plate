@@ -22,6 +22,15 @@ def register(user: schema_model.User, db: Session = Depends(get_db)):
         raise HTTPException(status_code=400, detail="Email already registered")
     else:
         return signup.create_user(user, db)
+    
+    
+@router.post('/send_account_verification',tags=["User Account"])
+def sendVerify(email: str, db: Session = Depends(get_db)):
+    create_user = signup.check_email_exist(db, email)
+    if(create_user):
+        raise HTTPException(status_code=400, detail="Email already registered")
+    else:
+        return signup.sendVerifyModel(email, db)
 
 @router.post('/gmail_auth_signup/{token_id}', tags=["Account auth"])
 def gmail_register(token_id: str, db: Session = Depends(get_db)):
