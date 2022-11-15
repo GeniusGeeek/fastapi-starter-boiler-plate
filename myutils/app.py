@@ -47,8 +47,9 @@ def upload_file(file:UploadFile):
         filename = file.filename.split(".")[0]
         filenameExtention = file.filename.split(".").pop()
         modifiedfilename = filename + str(random.randint(100000, 999999))+"."+filenameExtention
-        with open(destination_path+modifiedfilename, 'wb') as buffer:            buffer.write(file_contents)
-            return {"message":"success","file_path":destination_path+file.filename}
+        with open(destination_path+modifiedfilename, 'wb') as buffer:           
+            buffer.write(file_contents)
+            return {"message":"success","file_path":destination_path+modifiedfilename}
 
     except Exception as e:
         return {"message":e}
