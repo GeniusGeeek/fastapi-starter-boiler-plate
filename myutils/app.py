@@ -44,9 +44,10 @@ def create_jwt_token(data: dict, expires_delta: Optional[timedelta]= None):
 def upload_file(file:UploadFile):
     try:
         file_contents = file.file.read()
-        destination_path = "uploads/"
-        with open(destination_path+file.filename, 'wb') as buffer:
-            buffer.write(file_contents)
+        filename = file.filename.split(".")[0]
+        filenameExtention = file.filename.split(".").pop()
+        modifiedfilename = filename + str(random.randint(100000, 999999))+"."+filenameExtention
+        with open(destination_path+modifiedfilename, 'wb') as buffer:            buffer.write(file_contents)
             return {"message":"success","file_path":destination_path+file.filename}
 
     except Exception as e:
