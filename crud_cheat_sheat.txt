@@ -21,8 +21,10 @@ docs: https://www.tutorialspoint.com/sqlalchemy/sqlalchemy_orm_filter_operators.
      
 #ACCESS EACH LIST OF A READ DATA:
     data =  db.query(orm_model.modelName).all()
+    return data
+    ##from here should be in controller_routes file
+    
     for i in range(len(data)):
-        print(i)
         data[i].key = "custom value"
     return data
       
