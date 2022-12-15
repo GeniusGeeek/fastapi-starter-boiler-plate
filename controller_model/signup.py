@@ -20,12 +20,25 @@ def create_user(user_details: schema_model.User, db: Session):
     account_hash = app.generate_account_hash(account_hash_str) #used for password reset 
     receiver_email = user_details.email
     otp_toSend = random.randint(1000,9999)
+    generate_unique_id = None
+    while True:
+        generate_unique_id = random.randint(100000,999999)
+        check_unique_id = db.query(orm_model.User).filter(orm_model.User.unique_id == generate_unique_id).first()
+        if(check_unique_id):
+            generate_unique_id = random.randint(100000,999999)
+            check_unique_id = db.query(orm_model.User).filter(orm_model.User.unique_id == generate_unique_id).first()
+            if(check_unique_id is None):
+                break 
+        else:
+            break
     add_user = orm_model.User(
         hashed_password=app.hash_password(user_details.password),
         username=user_details.username,
         email=user_details.email,
         name=user_details.name,
-        account_hash=account_hash
+        account_hash=account_hash,
+        unique_id=generate_unique_id,
+
     )
     db.add(add_user)
     db.commit()
