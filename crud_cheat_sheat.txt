@@ -23,10 +23,10 @@ docs: https://www.tutorialspoint.com/sqlalchemy/sqlalchemy_orm_filter_operators.
     data =  db.query(orm_model.modelName).all()
     return data
     ##from here should be in controller_routes file
-    
-    for i in range(len(data)):
-        data[i].key = "custom value"
-    return data
+    receivedData
+    for i in range(len(receivedData)):
+       receivedData[i].key = "custom value"
+    return receivedData
       
 
 #INSERT/CREATE DATE
