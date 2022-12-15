@@ -13,6 +13,8 @@ class User(Base):
       account_verified = Column(Boolean, default=0, server_default=str(0), nullable=False)
       account_hash = Column(String(255))
       email_otp = Column(Integer)
+      unique_id = Column(Integer, unique=True, index=True)
+
 
 
 
