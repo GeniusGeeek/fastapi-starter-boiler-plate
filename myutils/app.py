@@ -2,7 +2,7 @@ import smtplib
 from email.message import EmailMessage
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi import FastAPI
-from fastapi import Depends, HTTPException, status
+from fastapi import Depends, HTTPException, status,UploadFile
 #from jose import jwt, JWTError
 import jwt
 from passlib.context import CryptContext
@@ -46,6 +46,7 @@ def create_jwt_token(data: dict, expires_delta: Optional[timedelta]= None):
 def upload_file(file:UploadFile):
     try:
         file_contents = file.file.read()
+        destination_path = "uploads/"
         filename = file.filename.split(".")[0]
         filenameExtention = file.filename.split(".").pop()
         modifiedfilename = filename + str(random.randint(100000, 999999))+"."+filenameExtention
