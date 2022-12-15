@@ -18,6 +18,13 @@ docs: https://www.tutorialspoint.com/sqlalchemy/sqlalchemy_orm_filter_operators.
 #READ/SELECT multiple data: return all result object of table without any condition(multiple rows)
      data =  db.query(orm_model.modelName).all()
      return data
+     
+#ACCESS EACH LIST OF A READ DATA:
+    data =  db.query(orm_model.modelName).all()
+    for i in range(len(data)):
+        print(i)
+        data[i].key = "custom value"
+    return data
       
 
 #INSERT/CREATE DATE
