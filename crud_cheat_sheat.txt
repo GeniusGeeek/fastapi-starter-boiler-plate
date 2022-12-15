@@ -42,7 +42,7 @@ data_to_add = orm_model.table(
 
             db.commit()
             db.refresh(data)
-            return {"Message": "Unique Id not found"}
+            return {"Message": "update successful"}
        else:
             return {"message": "condition not found"}   
 
