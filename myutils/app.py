@@ -2,7 +2,7 @@ import smtplib
 from email.message import EmailMessage
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi import FastAPI
-from fastapi import Depends, HTTPException, status,UploadFile
+from fastapi import Depends, HTTPException, status,UploadFile,File
 #from jose import jwt, JWTError
 import jwt
 from passlib.context import CryptContext
@@ -43,9 +43,13 @@ def create_jwt_token(data: dict, expires_delta: Optional[timedelta]= None):
     encoded_jwt_data = jwt.encode(data_to_encode, SECRET_KEY, algorithm= ALGORITHM)
     return encoded_jwt_data
 
+#def upload_file(file:byte=File(...)):
 def upload_file(file:UploadFile):
     if file.content_type not in ["image/jpeg", "image/png","image/jpg"]:
-        return {"file not a valid type for upload"}
+        return {"message":"file not a valid type for upload, valid type is image"}
+    # if (len(file) > 2000000):
+    #     return {"message":"file is too large, limit is  1mb"}
+    
     try:
         file_contents = file.file.read()
         destination_path = "uploads/"
@@ -117,3 +121,7 @@ def generate_account_hash(unique_Str):
 def getUserDetails(userId: str, detail: str, db: Session):
     data = db.query(orm_model.User).filter((orm_model.User.id == userId) | (orm_model.User.unique_id ==userId) ).first()
     return getattr(data, detail)
+
+def get_plan_details(plan_id,detail,db:Session):
+    user = db.query(orm_model.Plans).filter(orm_model.Plans.id == plan_id).first()
+    return getattr(user, detail)
