@@ -113,5 +113,5 @@ def generate_account_hash(unique_Str):
 
 
 def getUserDetails(userId: str, detail: str, db: Session):
-    data = db.query(orm_model.User).filter(orm_model.User.id == userId).first()
+    data = db.query(orm_model.User).filter((orm_model.User.id == userId) | (orm_model.User.unique_id ==userId) ).first()
     return getattr(data, detail)
