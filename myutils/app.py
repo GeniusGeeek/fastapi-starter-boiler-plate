@@ -44,6 +44,8 @@ def create_jwt_token(data: dict, expires_delta: Optional[timedelta]= None):
     return encoded_jwt_data
 
 def upload_file(file:UploadFile):
+    if file.content_type not in ["image/jpeg", "image/png","image/jpg"]:
+        return {"file not a valid type for upload"}
     try:
         file_contents = file.file.read()
         destination_path = "uploads/"
