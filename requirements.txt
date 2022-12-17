@@ -1,6 +1,7 @@
 alembic==1.8.1
 anyio==3.6.1
 asgiref==3.5.2
+bcrypt==4.0.1
 certifi==2022.6.15
 charset-normalizer==2.1.1
 click==8.1.3
