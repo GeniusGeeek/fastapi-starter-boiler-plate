@@ -81,8 +81,8 @@ for row in result:
    print ("ID:", row.id, "Name: ",row.name, "Address:",row.address, "Email:",row.email)
 
 
-#OR condtion (using the or_() method)
-result = session.query(orm_model.modelName).filter(or_(orm_model.modelName.property>2, Customers.name.like('Ra%')))
+#OR condtion (using the () | () method)
+result = session.query(orm_model.modelName).filter((orm_model.modelName.property>2) | (Customers.name.like('Ra%')))
 
 for row in result:
    print ("ID:", row.id, "Name: ",row.name, "Address:",row.address, "Email:",row.email)
