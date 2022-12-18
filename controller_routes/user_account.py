@@ -15,3 +15,12 @@ def editProfile(profile_details: schema_model.User_EditProfile, db: Session = De
       return user_accountModel.editProfileModel(profile_details, db)
   else:
     return{"message":"Invalid user made this request"}
+  
+ 
+@router.delete("/delete_user/{unique_id}", summary="delete user", tags=["User Account"])
+def delete_user(unique_id, db: Session = Depends(get_db), request=Depends(auth_user_request)):
+  user_unique_id = getUserDetails(request['sub'], "unique_id", db)
+  if (unique_id == user_unique_id):
+   return user_accountModel.delete_user(unique_id, db)
+  else:
+     return {"message": "Invalid user made this request"}
