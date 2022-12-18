@@ -47,8 +47,8 @@ def create_jwt_token(data: dict, expires_delta: Optional[timedelta]= None):
 def upload_file(file:UploadFile):
     if file.content_type not in ["image/jpeg", "image/png","image/jpg"]:
         return {"message":"file not a valid type for upload, valid type is image"}
-    # if (len(file) > 2000000):
-    #     return {"message":"file is too large, limit is  1mb"}
+   #if (len(file) > 2000000):
+       #return {"message":"file is too large, limit is  1mb"}
     
     try:
         file_contents = file.file.read()
