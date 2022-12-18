@@ -102,5 +102,9 @@ for row in result:
 #SUM VALUES IN A TABLE COLUMN (eg. is_admin column in User table)
     data = db.query(functions.sum(orm_model.User.is_admin)).scalar()
     return data
+    
+#CALLING db session within crud/model file or without dependency
+    from database_conn import SessionLocal
+    custom_db_session = SessionLocal()
 
 
