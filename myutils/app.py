@@ -43,7 +43,7 @@ def create_jwt_token(data: dict, expires_delta: Optional[timedelta]= None):
     encoded_jwt_data = jwt.encode(data_to_encode, SECRET_KEY, algorithm= ALGORITHM)
     return encoded_jwt_data
 
-#def upload_file(file:byte=File(...)):
+#def upload_file(file:bytes=File(...)):
 def upload_file(file:UploadFile):
     if file.content_type not in ["image/jpeg", "image/png","image/jpg"]:
         return {"message":"file not a valid type for upload, valid type is image"}
