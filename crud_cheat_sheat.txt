@@ -18,6 +18,24 @@ docs: https://www.tutorialspoint.com/sqlalchemy/sqlalchemy_orm_filter_operators.
 #READ/SELECT multiple data: return all result object of table without any condition(multiple rows)
      data =  db.query(orm_model.modelName).all()
      return data
+  
+  
+ #Order By READ/SELECT multiple data:
+     data =  db.query(orm_model.modelName).order_by(orm_model.modelName.id.desc()).all()
+     return data
+
+#Get last record
+    Lastdata =  db.query(orm_model.modelName).order_by(orm_model.modelName.id.desc()).first()
+     return Lastdata
+
+#Offset and Limit
+
+    limitData =  db.query(orm_model.modelName).filter(orm_model.modelName.property == condition).order_by(orm_model.modelName.id.desc()).limit(10)
+    return limitData
+
+    offsetData =  db.query(orm_model.modelName).filter(orm_model.modelName.property == condition).order_by(orm_model.modelName.id.desc()).offset(10)
+    return offsetData
+
      
 #ACCESS EACH LIST OF A READ DATA:
     data =  db.query(orm_model.modelName).all()
