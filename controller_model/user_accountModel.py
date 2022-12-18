@@ -26,6 +26,17 @@ def editProfileModel(edit_profileDetails: schema_model.User_EditProfile, db: Ses
 
   except Exception as e:
         return {"message": "Details not Updated, An error occured: "+ str(e)}   
+    
+    
+def delete_user(unique_id,db: Session):
+   data = db.query(orm_model.User).filter(orm_model.User.unique_id == unique_id).first()
+   if data is None:
+           return { "message":"user not found"}
+
+   else:
+        db.delete(data)
+        db.commit()
+        return {"message": "user deleted"}
 
 
 
