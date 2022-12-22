@@ -31,8 +31,10 @@ git clone https://github.com/GeniusGeeek/fastapi-starter-boiler-plate.git
 #Python 3.6 and greater
 
 
+
 In project directory run the following two commands to create a virtual environment
 ```bash
+pip3 install --upgrade pip 
 python3 -m venv .env 
 ```
 ```bash
@@ -41,24 +43,24 @@ source .env/bin/activate
 
 1. Install fastapi and uvicorn server:
 ```bash 
-pip install "fastapi[all]"
+pip3 install "fastapi[all]"
 ```
 
 2. Install SQLAlchemy for ORM management
 ```bash 
-pip install SQLAlchemy
+pip3 install SQLAlchemy
 ```
 3.  Install Mysql connection for python 
 ```bash 
-pip install mysql-connector-python
+pip3 install mysql-connector-python
 ```
 4. Install Alembic for Database Migrations
 ```bash 
-pip install alembic
+pip3 install alembic
 ```
 5. Install other Requirements
 ```bash
-pip install -r requirement.txt
+pip3 install -r requirement.txt
 ```
 
 
