@@ -4,6 +4,7 @@ A. REQUIMENTS
 Python 3.6 and greater
 
 In project directory run the following two commands to create a virtual environment
+**pip3 install --upgrade pip 
 **python3 -m venv .env 
 **source .env/bin/activate  
 
