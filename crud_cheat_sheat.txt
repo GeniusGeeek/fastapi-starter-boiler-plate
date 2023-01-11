@@ -33,11 +33,16 @@ docs: https://www.tutorialspoint.com/sqlalchemy/sqlalchemy_orm_filter_operators.
 
 #Offset and Limit
 
-    limitData =  db.query(orm_model.modelName).filter(orm_model.modelName.property == condition).order_by(orm_model.modelName.id.desc()).limit(10)
+    limitData =  db.query(orm_model.modelName).filter(orm_model.modelName.property == condition).order_by(orm_model.modelName.id.desc()).limit(10).all()
     return limitData
 
     offsetData =  db.query(orm_model.modelName).filter(orm_model.modelName.property == condition).order_by(orm_model.modelName.id.desc()).offset(10)
     return offsetData
+    
+    offsetDataWithLimit =  db.query(orm_model.modelName).filter(orm_model.modelName.property == condition).order_by(orm_model.modelName.id.desc()).offset(10).limit(20).all()
+    return offsetData
+    
+    
 
      
 #ACCESS EACH LIST OF A READ DATA:
