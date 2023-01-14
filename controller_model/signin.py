@@ -9,19 +9,20 @@ def login_email(email: str,db: Session):
 
 def forgotPassModel(email, db:Session):
   receiver_email = email
-  otp_toSend = random.randint(1000, 9999)
-  try:
+  data = db.query(orm_model.User).filter(orm_model.User.email == email).first()
+  if(data is not None):
+     otp_toSend = random.randint(1000, 9999)
+     try:
         data = db.query(orm_model.User).filter(orm_model.User.email == email).first()
         data.email_otp = otp_toSend
         db.commit()
         db.refresh(data)
-            
-           
+        app.send_mail("server", "senderAddress", "password", receiver_email,
+                      "Hi, Use the following OTP to reset your account password, OTP: "+str(otp_toSend), "Reset Account password")
+        return {"message": "Reset Code sent successfully"}
 
-
-  except Exception as e:
+     except Exception as e:
         return {"message": "An error occured: "+ str(e)}   
-
-  app.send_mail("mailServer", "sender", "password", receiver_email,"Hi, Use the following OTP to reset your account password, OTP: "+str(otp_toSend), "FAST API reset Account")
-  return {"message": "Reset Code sent successfully"}
+  else:
+      return {"message": "email does not exit"}
 
