@@ -15,20 +15,15 @@ router = APIRouter()
 def post_data(post_data_in: schema_model.resetPassword, db: Session = Depends(get_db)):
   get_reset_code = signin.login_email(post_data_in.email, db)
   if(get_reset_code is not None):
-     check_email = signin.forgotPassModel(post_data_in.email, db)
-  #reset_code = check_email.account_hash
      reset_code = get_reset_code.email_otp
-
-
-     if(check_email):
-       if(post_data_in.reset_code == reset_code):
+    
+     if(post_data_in.reset_code == reset_code):
          response = signup.reset_password(post_data_in,db)
          return response
 
-       else:
+     else:
          raise HTTPException(status_code=400, detail="invalid reset code")
 
-     else:  
-       raise HTTPException(status_code=400, detail="an error occured")
+  
   else:
       raise HTTPException(status_code=400, detail="Invalid  email")
