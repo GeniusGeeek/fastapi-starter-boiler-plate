@@ -51,10 +51,21 @@ def create_user(user_details: schema_model.User, db: Session):
 
 
 def sendVerifyModel(email, db):
+    def sendVerifyModel(email, db):
     receiver_email = email
     otp_toSend = random.randint(1000,9999)
-    app.send_mail("mailServer", "sender", "password", receiver_email,"Hi, Use the following OTP to verify your account, OTP: "+str(otp_toSend), "FAST API Verify Account")
-    return {"message":"Verification Code sent successfully"}
+    data = db.query(orm_model.User).filter(orm_model.User.email == email).first()
+    if (data is not None):
+
+        data.email_otp = otp_toSend
+        db.commit()
+        db.refresh(data)
+        app.send_mail("mailServer", "sender", "password", receiver_email,"Hi, Use the following OTP to verify your account, OTP: "+str(otp_toSend), "FAST API Verify Account")
+        return {"message": "Verification Code sent successfully"}
+
+    else:
+        return {"message": "condition not found"}   
+   
 
 
 def VerifyAcctModel(email, email_otp, db):
