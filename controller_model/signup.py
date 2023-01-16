@@ -38,6 +38,8 @@ def create_user(user_details: schema_model.User, db: Session):
         name=user_details.name,
         account_hash=account_hash,
         unique_id=generate_unique_id,
+        email_otp = otp_toSend
+
 
     )
     db.add(add_user)
