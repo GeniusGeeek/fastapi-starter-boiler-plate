@@ -28,17 +28,17 @@ def register(user: schema_model.User, db: Session = Depends(get_db)):
 def sendVerify(email: str, db: Session = Depends(get_db)):
     create_user = signup.check_email_exist(db, email)
     if(create_user):
-        raise HTTPException(status_code=400, detail="Email already registered")
-    else:
         return signup.sendVerifyModel(email, db)
+    else:
+        raise HTTPException(status_code=400, detail="Email already registered")
     
 @router.post('/verify_account',tags=["User Account"])
-def VerifyAcct(email: str, email_otp:int, db: Session = Depends(get_db)):
+def VerifyAcct(email: str, email_otp:str, db: Session = Depends(get_db)):
     create_user = signup.check_email_exist(db, email)
     if(create_user):
-        raise HTTPException(status_code=400, detail="Email already registered")
+        return signup.VerifyAcctModel(email, email_otp, db)
     else:
-        return signup.VerifyAcctModel(email,email_otp, db)
+        raise HTTPException(status_code=400, detail="Email does not exit")
 
 @router.post('/gmail_auth_signup/{token_id}', tags=["Account auth"])
 def gmail_register(token_id: str, db: Session = Depends(get_db)):
