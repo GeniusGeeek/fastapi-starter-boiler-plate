@@ -20,7 +20,7 @@ def login(user_login_details: OAuth2PasswordRequestForm = Depends(), db: Session
   #return login_user
 
    if(app.verify_password(user_login_details.password, login_user.hashed_password)):
-      if (login_user.email_otp == 1):
+      if (login_user.account_verified == 1):
           data = {"sub": login_user.id}
           jwt_exp_time = app.timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
           encoded_jwt = app.create_jwt_token(data, jwt_exp_time)
