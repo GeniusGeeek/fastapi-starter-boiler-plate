@@ -19,15 +19,18 @@ def login(user_login_details: OAuth2PasswordRequestForm = Depends(), db: Session
   login_user = signin.login_email(user_login_details.username,db)
   #return login_user
 
-  if(login_user):
-    if(app.verify_password(user_login_details.password, login_user.hashed_password)):
-      data = {"sub": login_user.id}
-      jwt_exp_time = app.timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
-      encoded_jwt = app.create_jwt_token(data, jwt_exp_time)
-      return {"access_token": encoded_jwt, "message": "login successfull", "user_details": login_user, "token type": "bearer"}
+   if(app.verify_password(user_login_details.password, login_user.hashed_password)):
+      if (login_user.email_otp == 1):
+          data = {"sub": login_user.id}
+          jwt_exp_time = app.timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
+          encoded_jwt = app.create_jwt_token(data, jwt_exp_time)
+          return {"access_token": encoded_jwt, "message": "login successfull", "user_details": login_user, "token type": "bearer"}
+      else:
+          return {"message": "Account not verified, verify account to login"}
 
-    else:
+   else:
       raise HTTPException(status_code=400, detail="wrong password")
+
 
   else:  
     raise HTTPException(status_code=400, detail="email does not exist")
