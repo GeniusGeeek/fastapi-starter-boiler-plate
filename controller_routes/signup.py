@@ -36,7 +36,7 @@ def sendVerify(email: str, db: Session = Depends(get_db)):
 def VerifyAcct(email: str, email_otp:str, db: Session = Depends(get_db)):
     create_user = signup.check_email_exist(db, email)
     if(create_user):
-        return signup.VerifyAcctModel(email, email_otp, db)
+        return signup.VerifyAcctModel(email, int(email_otp), db)
     else:
         raise HTTPException(status_code=400, detail="Email does not exit")
 
