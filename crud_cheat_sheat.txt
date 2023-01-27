@@ -21,6 +21,7 @@ docs: https://www.tutorialspoint.com/sqlalchemy/sqlalchemy_orm_filter_operators.
   
   
  #Order By READ/SELECT multiple data:
+     from sqlalchemy.sql import func
      data =  db.query(orm_model.modelName).order_by(orm_model.modelName.id.desc()).all()
      return data
      #order by random:
@@ -127,7 +128,8 @@ for row in result:
     return data
 
 #SUM VALUES IN A TABLE COLUMN (eg. is_admin column in User table)
-    data = db.query(functions.sum(orm_model.User.is_admin)).scalar()
+    from sqlalchemy import func
+    data = db.query(func.sum(orm_model.User.is_admin)).scalar()
     return data
     
 #CALLING db session within crud/model file or without dependency
