@@ -96,8 +96,9 @@ def send_mail(server,sender,password,receipient,message, subject):
   msg = EmailMessage()
   fromaddr = sender
   toaddrs = receipient
-  msgtxt = message
-  msg.set_content(msgtxt)
+  msgtxt = "<html><body><h1>Hello World!</h1><p>This is a test email with HTML formatting.</p></body></html>"
+  msg.set_content(msgtxt,subtype='html')
+  msg.add_alternative(message_text, subtype='plain')
   msg['Subject'] = subject
   msg['From'] = fromaddr
   msg['To'] = toaddrs
