@@ -14,6 +14,8 @@ class User(Base):
       account_hash = Column(String(255))
       email_otp = Column(Integer)
       unique_id = Column(Integer, unique=True, index=True)
+      created_at = Column(String(255))
+
 
 
 
