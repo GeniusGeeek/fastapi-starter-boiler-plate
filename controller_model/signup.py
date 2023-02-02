@@ -3,6 +3,7 @@ from models import orm_model, schema_model
 from passlib.context import CryptContext
 import random
 import time
+from datetime import datetime
 
 
 from myutils import app
@@ -38,7 +39,9 @@ def create_user(user_details: schema_model.User, db: Session):
         name=user_details.name,
         account_hash=account_hash,
         unique_id=generate_unique_id,
-        email_otp = otp_toSend
+        email_otp = otp_toSend,
+        created_at = str(datetime.now())
+
 
 
     )
