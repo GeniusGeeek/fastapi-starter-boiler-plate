@@ -14,7 +14,7 @@ router = APIRouter()
 
 
 @router.post("/uploadFile", summary="Upload file along with other form data", tags=["App Utils"])
-def file_upload(description: str = Form("write something"),image_file=Depends(app.upload_file), db: Session = Depends(get_db)):
+def file_upload(description: str = Form("write default content or leave blank without quotes"),image_file=Depends(app.upload_file), db: Session = Depends(get_db)):
   if (image_file['message'] == "success"):
       return {"message":"Uploaded Successfuly","uploadpath":image_file['file_path'],"description":description}
   else:
