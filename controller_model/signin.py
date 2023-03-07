@@ -3,8 +3,18 @@ from models import orm_model, schema_model
 import random
 from myutils import app
 
-def login_email(email: str,db: Session):
-  return db.query(orm_model.User).filter(orm_model.User.email == email).first()
+
+def login_email(email: str, db: Session):
+    data = db.query(orm_model.User).filter(
+        orm_model.User.email == email).first()
+    if (data is not None):
+        if (data.accounted_deactiavted == True):
+            return "0"
+        else:
+            return data
+    else:
+        return "User does not exit"
+
 
 
 def forgotPassModel(email, db:Session):
