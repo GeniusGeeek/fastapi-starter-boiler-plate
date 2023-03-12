@@ -99,8 +99,19 @@ data_to_add = orm_model.table(
            return {not found}
 
         else:
-        db.delete(data)
-        db.commit()      
+          db.delete(data)
+          db.commit()  
+
+#DELETE MULTIPLE DATA
+     data = db.query(orm_model.modelName).filter(orm_model.modelName.property == condition).first()
+       
+        if data is None:
+           return {not found}
+
+        else:
+          for item in data:
+                db.delete(item)
+                db.commit()    
 
 #LIKE statment
 searchWord = "%{}%".format(searched_word)
