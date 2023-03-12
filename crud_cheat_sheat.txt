@@ -86,7 +86,10 @@ data_to_add = orm_model.table(
             return {"message": "condition not found"}   
 
       except Exception as e:
+         db.rollback()
         return {"message": "An error occured: "+ str(e)}   
+      finally:
+        db.close()
 
 
  #DELETE DATA
