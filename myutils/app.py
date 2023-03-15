@@ -14,6 +14,7 @@ from sqlalchemy.orm import Session
 from models import orm_model, schema_model
 import random
 import os
+from typing import List
 
 
 outh2_scheme = OAuth2PasswordBearer(tokenUrl="signin")
@@ -71,7 +72,37 @@ def upload_file(file:UploadFile):
      
     finally:
         file.file.close()
+       
+    
+async def upload_multiple_files(files: List[UploadFile] = File(...)):
+     try:
+        uploaded_files = []
+        for file in files:
+            if file.content_type not in ["image/jpeg", "image/png","image/jpg"]:
+                return {"message": f"{file.filename} is not a valid type for upload, valid types are image/jpeg, image/png, image/jpg"}
 
+            file_contents = file.file.read()
+            destination_path = "uploads/"
+            filename = file.filename.split(".")[0]
+            filenameExtention = file.filename.split(".").pop()
+            modifiedfilename = filename + str(random.randint(100000, 999999))+"."+filenameExtention
+            with open(destination_path+modifiedfilename, 'wb') as buffer:
+                buffer.write(file_contents)
+                if (os.path.getsize(destination_path+modifiedfilename) > 2000000):
+                    os.remove(destination_path+modifiedfilename)
+                    return {"message": f"{file.filename} is too large, max size is 2mb"}
+
+                else:
+                    uploaded_files.append(destination_path+modifiedfilename)
+
+        return {"message": "success", "file_paths": uploaded_files}
+
+    except Exception as e:
+        return {"message": e}
+
+    finally:
+        for file in files:
+            file.file.close()
 
 def auth_user_request(token: str = Depends(outh2_scheme)):
     credentials_exception = HTTPException(
