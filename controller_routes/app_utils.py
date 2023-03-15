@@ -33,6 +33,14 @@ def file_upload(description: Optional[str] = Form(None),image_file: UploadFile =
    else:
        
         return {"message": description}
+      
+      
+ @router.post("/upload_multiple_files", summary="Upload fmultiple files", tags=["App Utils"])
+def file_upload(image_file=Depends(app.upload_multiple_files), db: Session = Depends(get_db)):
+  if (image_file['message'] == "success"):
+      return {"message":"Uploaded Successfuly","uploadpath":image_file['file_paths']}
+  else:
+      return {"message":"error occured"+ str(image_file)}
   
   
 
