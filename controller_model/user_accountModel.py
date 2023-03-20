@@ -37,6 +37,15 @@ def delete_user(unique_id,db: Session):
         db.delete(data)
         db.commit()
         return {"message": "user deleted"}
+      
+      
+      
+
+def profileDetails(unique_id: str, db: Session):
+    data = db.query(orm_model.User).filter(
+        orm_model.User.unique_id == unique_id).first()
+    return data
+
 
 
 
