@@ -24,3 +24,11 @@ def delete_user(unique_id, db: Session = Depends(get_db), request=Depends(auth_u
    return user_accountModel.delete_user(unique_id, db)
   else:
      return {"message": "Invalid user made this request"}
+
+
+
+@router.get("/get_user_details", summary="get user details", tags=["User Account"])
+def profileDetails(db: Session = Depends(get_db), request=Depends(auth_user_request)):
+    unique_id = getUserDetails(request['sub'], "unique_id", db)
+    return user_accountModel.profileDetails(unique_id, db)
+
