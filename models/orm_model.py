@@ -1,6 +1,8 @@
 from email.policy import default
 from sqlalchemy import Boolean, Column, ForeignKey, Integer, String
 from database_conn import Base
+from sqlalchemy.dialects.mysql import LONGTEXT
+
 
 class User(Base):
       __tablename__ = 'users'
@@ -16,6 +18,8 @@ class User(Base):
       unique_id = Column(Integer, unique=True, index=True)
       created_at = Column(String(255))
       accounted_deactiavted = Column(Boolean, default=False)
+      user_bio = Column(LONGTEXT,nullable=False,default=None, server_default=None)
+
 
 
 
