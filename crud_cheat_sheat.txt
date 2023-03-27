@@ -6,12 +6,11 @@ docs: https://www.tutorialspoint.com/sqlalchemy/sqlalchemy_orm_filter_operators.
   return data
 
 #READ/SELECT single data: return result object of table equal condition (single row)
-   data = db.query(orm_model.modelName).filter(orm_model.modelName.
-   
-   
-   == condition).first()
+   data = db.query(orm_model.modelName).filter(orm_model.modelName.property == condition).first()
      return data
      //if data is None:
+     
+     
 #READ/SELECT multiple data: return result object of table equal condition (multiple rows)
     userId = auth_user.get('sub') // get id of authenticated user
      data =  db.query(orm_model.modelName).filter(orm_model.modelName.property == condition).all()
