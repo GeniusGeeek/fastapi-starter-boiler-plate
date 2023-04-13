@@ -15,6 +15,7 @@ from models import orm_model, schema_model
 import random
 import os
 from typing import List
+import string
 
 
 outh2_scheme = OAuth2PasswordBearer(tokenUrl="signin")
@@ -159,3 +160,9 @@ def generate_account_hash(unique_Str):
 def getUserDetails(userId: str, detail: str, db: Session):
     data = db.query(orm_model.User).filter((orm_model.User.id == userId) | (orm_model.User.unique_id ==userId) ).first()
     return getattr(data, detail)
+
+def generate_unique_random_id():
+    chars = string.ascii_uppercase + string.ascii_lowercase + string.digits
+    pick_chars = ''.join(random.choice(captcha_chars) for _ in range(6))
+    unique_id = captcha_num+str(int(time.time()))
+    return unique_id
