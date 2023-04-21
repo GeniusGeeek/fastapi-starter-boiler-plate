@@ -101,7 +101,7 @@ async def upload_multiple_files(files: List[UploadFile] = File(...)):
      except Exception as e:
         return {"message": e}
 
-    finally:
+     finally:
         for file in files:
             file.file.close()
 
