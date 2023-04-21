@@ -54,7 +54,7 @@ def create_user(user_details: schema_model.User, db: Session):
 
 
 def sendVerifyModel(email, db):
-    def sendVerifyModel(email, db):
+  def sendVerifyModel(email, db):
     receiver_email = email
     otp_toSend = random.randint(1000,9999)
     data = db.query(orm_model.User).filter(orm_model.User.email == email).first()
@@ -88,7 +88,7 @@ def VerifyAcctModel(email, email_otp, db):
 
 
 
-     except Exception as e:
+    except Exception as e:
         return {"message": "An error occured: "+ str(e)}   
 
 
