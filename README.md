@@ -60,7 +60,7 @@ pip3 install alembic
 ```
 5. Install other Requirements
 ```bash
-pip3 install -r requirement.txt
+pip3 install -r requirements.txt
 ```
 
 
