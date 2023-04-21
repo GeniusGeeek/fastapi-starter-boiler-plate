@@ -98,7 +98,7 @@ async def upload_multiple_files(files: List[UploadFile] = File(...)):
 
         return {"message": "success", "file_paths": uploaded_files}
 
-    except Exception as e:
+     except Exception as e:
         return {"message": e}
 
     finally:
