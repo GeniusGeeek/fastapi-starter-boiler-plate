@@ -163,6 +163,6 @@ def getUserDetails(userId: str, detail: str, db: Session):
 
 def generate_unique_random_id():
     chars = string.ascii_uppercase + string.ascii_lowercase + string.digits
-    pick_chars = ''.join(random.choice(captcha_chars) for _ in range(6))
-    unique_id = captcha_num+str(int(time.time()))
+    pick_chars = ''.join(random.choice(chars) for _ in range(6))
+    unique_id = pick_chars+str(int(time.time()))
     return unique_id
