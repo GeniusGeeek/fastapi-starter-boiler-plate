@@ -22,7 +22,22 @@ def file_upload(description: str = Form("write default content or leave blank wi
   else:
       return {"message":"error occured"+ str(image_file)}
     
-@router.post("/uploadFileOptional", summary="Upload optinal file along with other form data", tags=["App Utils"])
+
+@router.post("/uploadFileOptional", summary="Upload Optional file", tags=["App Utils"])
+def add_employee(description: str = Form(),image_file=Depends(app.optional_upload_file), db: Session = Depends(get_db)):
+    if image_file is not None:
+
+        if (image_file['message'] == "success"):
+            return {"message": "Uploaded Successfuly", "uploadpath": image_file['file_path'], "description": "description"}
+        else:
+            return {"message": "error occured" + str(image_file)}
+
+    else:
+
+        return {"message": description}
+
+    
+@router.post("/upload/optional/formdata", summary="Upload optinal file along with other optional form data", tags=["App Utils"])
 def file_upload(description: Optional[str] = Form(None),image_file: UploadFile = File(None), db: Session = Depends(get_db)):
    if image_file:
 
