@@ -73,6 +73,27 @@ def upload_file(file:UploadFile):
      
     finally:
         file.file.close()
+        
+       
+    
+
+def optional_upload_file(file:  Optional[UploadFile] = None):
+    try:
+        if (file is not None):
+            file_contents = file.file.read()
+            destination_path = "uploads/"
+            filename = file.filename.split(".")[0]
+            filenameExtention = file.filename.split(".").pop()
+            modifiedfilename = filename + \
+                str(random.randint(100000, 999999))+"."+filenameExtention
+            modifiedfilenameWithDir = destination_path+modifiedfilename
+            with open(destination_path+modifiedfilename, 'wb') as buffer:
+                buffer.write(file_contents)
+                return {"message": "success", "file_path": modifiedfilenameWithDir}
+
+    except Exception as e:
+        return {"message": e}
+
        
     
 async def upload_multiple_files(files: List[UploadFile] = File(...)):
