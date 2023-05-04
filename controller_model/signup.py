@@ -41,6 +41,9 @@ def create_user(user_details: schema_model.User, db: Session):
         unique_id=generate_unique_id,
         email_otp = otp_toSend,
         created_at = str(datetime.now())
+        
+        
+        
 
 
 
@@ -149,3 +152,14 @@ def reset_password(user: schema_model.resetPassword, db: Session):
     db.commit()
     db.refresh(data)
     return {"message": "Password reset successfull"}
+
+
+
+def change_password(user: schema_model.changePassword, db: Session):
+    data = db.query(orm_model.User).filter(
+        orm_model.User.unique_id == user.unique_id).first()
+    data.hashed_password = app.hash_password(user.new_password)
+    db.commit()
+    db.refresh(data)
+    return {"message": "Password changed successfull"}
+
