@@ -24,12 +24,18 @@ class resetPassword(BaseModel):
     reset_code: int = Field(example="nskdnsdksdn223eee")
     new_password:str = Field(example="newPassword")
       
-      
+ 
+class changePassword(BaseModel):
+    new_password: str = Field(example="newPassword")
+    unique_id: int = Field(example="111111")
+
+
 class User_EditProfile(BaseModel):
     name: str = Field(example="richard")
     email: str = Field(example="foo@mail.com")
     username: str = Field(example="adminUser")
-    
+    unique_id: int = Field(example="adminUser")
+ 
       
       
       
