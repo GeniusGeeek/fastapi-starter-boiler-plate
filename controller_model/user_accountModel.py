@@ -49,7 +49,7 @@ def deactivate_accountModel(unique_id, db: Session):
         return {"user account not found"}
 
     else:
-        data.accounted_deactiavted = 1
+        data.account_deactiavted = 1
         db.commit()
 
         db.refresh(data)
