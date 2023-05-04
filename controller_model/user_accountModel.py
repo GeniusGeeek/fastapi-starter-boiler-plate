@@ -40,6 +40,23 @@ def delete_user(unique_id,db: Session):
       
       
       
+      
+ 
+def deactivate_accountModel(unique_id, db: Session):
+    data = db.query(orm_model.User).filter(
+        orm_model.User.unique_id == unique_id).first()
+    if data is None:
+        return {"user account not found"}
+
+    else:
+        data.accounted_deactiavted = 1
+        db.commit()
+
+        db.refresh(data)
+        db.close()
+        return {"user account deactivated"}
+
+      
 
 def profileDetails(unique_id: str, db: Session):
     data = db.query(orm_model.User).filter(
