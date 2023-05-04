@@ -27,3 +27,19 @@ def post_data(post_data_in: schema_model.resetPassword, db: Session = Depends(ge
   
   else:
       raise HTTPException(status_code=400, detail="Invalid  email")
+      
+      
+ 
+@router.post("/change_password", summary="user change password", tags=["User Account"])
+def post_data(post_data_in: schema_model.changePassword, db: Session = Depends(get_db), request=Depends(app.auth_user_request)):
+
+    unique_id = app.getUserDetails(request['sub'], "unique_id", db)
+    if (unique_id == post_data_in.unique_id):
+        response = signup.change_password(post_data_in, db)
+        return response
+    else:
+        return {"message": "Invalid user made this request"}
+     
+
+      
+      
