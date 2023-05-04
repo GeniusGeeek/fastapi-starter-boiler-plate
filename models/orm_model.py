@@ -17,7 +17,7 @@ class User(Base):
       email_otp = Column(Integer)
       unique_id = Column(Integer, unique=True, index=True)
       created_at = Column(String(255))
-      accounted_deactiavted = Column(Boolean, default=False)
+      account_deactiavted = Column(Boolean, default=False)
       user_bio = Column(LONGTEXT)
 
 
