@@ -16,7 +16,7 @@ def post_data(details: schema_model.user_login, db: Session = Depends(get_db), r
    #is_admin == 1 to check if user is an admin
   admin_check = getUserDetails(request['sub'], "is_admin", db) 
   if (admin_check == 1):  
-    return {"request_auth_user": request, "inputs": details, "user unique_id detail": user_unique_id}
+    return {"message":"only an admin can access this route","request_auth_user": request, "inputs": details, "user unique_id detail": user_unique_id}
 
   else:
     return{"message":"Invalid user made this request"}
