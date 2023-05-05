@@ -12,8 +12,8 @@ def editProfileModel(edit_profileDetails: schema_model.User_EditProfile, db: Ses
 
 
          data.name = edit_profileDetails.name
-         data.username = edit_profileDetails.first_name
-         data.email = edit_profileDetails.first_name
+         data.username = edit_profileDetails.username
+         data.email = edit_profileDetails.email
          
 
 
