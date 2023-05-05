@@ -182,7 +182,11 @@ def generate_account_hash(unique_Str):
 
 def getUserDetails(userId: str, detail: str, db: Session):
     data = db.query(orm_model.User).filter((orm_model.User.id == userId) | (orm_model.User.unique_id ==userId) ).first()
-    return getattr(data, detail)
+    if (data is None):
+
+        raise HTTPException(status_code=401, detail="USER ID NOT FOUND")
+    else:
+        return getattr(data, detail)
 
 def generate_unique_random_id():
     chars = string.ascii_uppercase + string.ascii_lowercase + string.digits
