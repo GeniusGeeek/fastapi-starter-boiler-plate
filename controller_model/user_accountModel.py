@@ -19,10 +19,10 @@ def editProfileModel(edit_profileDetails: schema_model.User_EditProfile, db: Ses
 
          db.commit()
          db.refresh(data)
-         return{"Message": "Successfully Updated Details"}
+         return{"message": "Successfully Updated Details"}
      else:
 
-         return{"Message": "Unique Id not found"}
+         return{"message": "Unique Id not found"}
 
   except Exception as e:
         return {"message": "Details not Updated, An error occured: "+ str(e)}   
