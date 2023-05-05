@@ -46,7 +46,7 @@ def deactivate_accountModel(unique_id, db: Session):
     data = db.query(orm_model.User).filter(
         orm_model.User.unique_id == unique_id).first()
     if data is None:
-        return {"user account not found"}
+        return {"message":"user account not found"}
 
     else:
         data.account_deactiavted = 1
@@ -54,7 +54,7 @@ def deactivate_accountModel(unique_id, db: Session):
 
         db.refresh(data)
         db.close()
-        return {"user account deactivated"}
+        return {"message":"user account deactivated"}
 
       
 
