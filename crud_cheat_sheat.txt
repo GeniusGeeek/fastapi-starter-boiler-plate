@@ -89,6 +89,32 @@ data_to_add = orm_model.table(
         return {"message": "An error occured: "+ str(e)}   
       finally:
         db.close()
+        
+ # Update all rows that match the condition     
+ try:
+    
+    db.query(orm_model.modelName).filter(orm_model.modelName.property == condition).update({
+        orm_model.modelName.column_to_update: newData,
+        orm_model.modelName.column_to_update1: newData1
+    })
+
+    # Commit the changes to the database
+    db.commit()
+    
+    # Return a success message
+    return {"message": "Update successful"}
+
+except Exception as e:
+    # Rollback the changes in case of an error
+    db.rollback()
+    
+    # Return an error message
+    return {"message": "An error occurred: " + str(e)}
+    
+finally:
+    # Close the database connection
+    db.close()
+
 
 
  #DELETE DATA
