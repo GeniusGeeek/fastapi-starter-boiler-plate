@@ -166,7 +166,7 @@ def send_mail(server,sender,password,receipient,message, subject):
         #server.starttls() if port is 587
          smtp.login(fromaddr, password)
          smtp.send_message(msg)
-         return "sent mail"
+         return {"message":"sent mail"}
 
   #except smtplib.SMTPException:
   except Exception as e:
