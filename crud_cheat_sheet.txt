@@ -101,8 +101,6 @@ data_to_add = orm_model.table(
     # Commit the changes to the database
     db.commit()
     
-    # Return a success message
-    return {"message": "Update successful"}
 
 except Exception as e:
     # Rollback the changes in case of an error
@@ -114,6 +112,28 @@ except Exception as e:
 finally:
     # Close the database connection
     db.close()
+
+
+#OR THIS TO UPDATE MULTIPLE RECORD
+data = db.query(orm_model.modelName).filter(orm_model.modelName.property == condition).first()
+ if(data is not None):
+
+     
+     for item in data:
+         data.column_to_update = newData
+         data.column_to_update1 = newData1
+     db.commit()
+     db.refresh(data)
+
+         # Return a success message
+         return {"message": "Update successful"}
+
+
+     db.commit()
+     db.refresh(data)
+     return {"Message": "update successful"}
+else:
+     return {"message": "condition not found"}   
 
 
 
