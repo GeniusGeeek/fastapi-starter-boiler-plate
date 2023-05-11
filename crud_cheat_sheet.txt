@@ -123,7 +123,7 @@ data = db.query(orm_model.modelName).filter(orm_model.modelName.property == cond
          data.column_to_update = newData
          data.column_to_update1 = newData1
      db.commit()
-     db.refresh(data)
+   
     
      return {"Message": "update successful"}
 else:
