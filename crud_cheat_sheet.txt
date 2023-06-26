@@ -115,7 +115,7 @@ finally:
 
 
 #OR THIS TO UPDATE MULTIPLE RECORD
-data = db.query(orm_model.modelName).filter(orm_model.modelName.property == condition).first()
+data = db.query(orm_model.modelName).filter(orm_model.modelName.property == condition).all()
  if(data is not None):
 
      
