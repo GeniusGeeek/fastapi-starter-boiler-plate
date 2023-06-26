@@ -66,7 +66,7 @@ data_to_add = orm_model.table(
         
     )
     db.add(data_to_add)
-     db.commit()
+    db.commit()
     db.refresh(data_to_add)
 
 #UPDATE DATA
@@ -80,7 +80,7 @@ data_to_add = orm_model.table(
 
             db.commit()
             db.refresh(data)
-            return {"Message": "update successful"}
+            return {"message": "update successful"}
        else:
             return {"message": "condition not found"}   
 
@@ -120,9 +120,10 @@ data = db.query(orm_model.modelName).filter(orm_model.modelName.property == cond
 
      
      for item in data:
-         data.column_to_update = newData
-         data.column_to_update1 = newData1
-     db.commit()
+         item.column_to_update = newData
+         item.column_to_update1 = newData1
+         db.commit()
+     db.close()
    
     
      return {"Message": "update successful"}
