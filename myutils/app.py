@@ -94,7 +94,8 @@ def optional_upload_file(file:  Optional[UploadFile] = None):
             with open(destination_path+modifiedfilename, 'wb') as buffer:
                 buffer.write(file_contents)
                 return {"message": "success", "file_path": modifiedfilenameWithDir}
-
+        else:
+                return {"message": "no file to upload"}
     except Exception as e:
         return {"message": e}
 
