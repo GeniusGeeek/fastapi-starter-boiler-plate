@@ -56,8 +56,8 @@ def create_user(user_details: schema_model.User, db: Session):
     return {"message":"Registeration successful"}
 
 
-def sendVerifyModel(email, db):
-  def sendVerifyModel(email, db):
+def resendVerifyModel(email, db):
+ 
     receiver_email = email
     otp_toSend = random.randint(1000,9999)
     data = db.query(orm_model.User).filter(orm_model.User.email == email).first()

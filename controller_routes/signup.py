@@ -26,14 +26,14 @@ def register(user: schema_model.User, db: Session = Depends(get_db)):
         return signup.create_user(user, db)
     
     
-@router.post('/send_account_verification',tags=["User Account"])
-def sendVerify(email: str, db: Session = Depends(get_db)):
+@router.post('/resend-account-verification',tags=["User Account"])
+def resendVerify(email: str, db: Session = Depends(get_db)):
     create_user = signup.check_email_exist(db, email)
     if(create_user):
-        return signup.sendVerifyModel(email, db)
+        return signup.resendVerifyModel(email, db)
     else:
         #raise HTTPException(status_code=400, detail="Email already registered")
-        message= {"message":"Email already registered"}
+        message= {"message":"Email not found"}
         return JSONResponse(status_code=400, content=message)
     
 @router.post('/verify_account',tags=["User Account"])
