@@ -22,11 +22,15 @@ def post_data(post_data_in: schema_model.resetPassword, db: Session = Depends(ge
          return response
 
      else:
-         raise HTTPException(status_code=400, detail="invalid reset code")
+         #raise HTTPException(status_code=400, detail="invalid reset code")
+         message= {"message":"invalid reset code"}
+         return JSONResponse(status_code=400, content=message)
 
   
   else:
-      raise HTTPException(status_code=400, detail="Invalid  email")
+      #raise HTTPException(status_code=400, detail="Invalid  email")
+      message= {"message":"Invalid  email"}
+      return JSONResponse(status_code=400, content=message)
       
       
  

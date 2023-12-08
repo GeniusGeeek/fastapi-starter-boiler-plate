@@ -17,6 +17,7 @@ import os
 from typing import List
 import string
 import time
+from fastapi.responses import JSONResponse
 
 
 outh2_scheme = OAuth2PasswordBearer(tokenUrl="signin")
@@ -133,11 +134,11 @@ async def upload_multiple_files(files: List[UploadFile] = File(...)):
 
 
 def auth_user_request(token: str = Depends(outh2_scheme)):
-    credentials_exception = HTTPException(
-        status_code=status.HTTP_401_UNAUTHORIZED,
-        detail="Could not validate credentials",
-        headers={"WWW-Authenticate": "Bearer"},
-    )
+    # credentials_exception = HTTPException(
+    #     status_code=status.HTTP_401_UNAUTHORIZED,
+    #     detail="Could not validate credentials",
+    #     headers={"WWW-Authenticate": "Bearer"},
+    # )
     try:
         payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
         decoded_jwt = payload
@@ -145,7 +146,9 @@ def auth_user_request(token: str = Depends(outh2_scheme)):
     # except JWTError as error:
         # return error
     except:
-        raise credentials_exception
+        #raise credentials_exception
+        message= {"message":"Could not validate credentials"}
+        return JSONResponse(status_code=400, content=message)
 
     return decoded_jwt
 
@@ -155,7 +158,10 @@ def send_mail(server, sender, password, receipient, message, subject):
     msg = EmailMessage()
     fromaddr = sender
     toaddrs = receipient
-    msgtxt = "<html><body><h1>Hello World!</h1><p>This is a test email with HTML formatting.</p></body></html>"
+    msg = "This is a test email with HTML formatting."
+    msg = message
+    msgtxt = """<html><body><h1>Hello World!</h1><p>{message}</p></body></html>"""
+    msgtxt = msgtxt.format(message=message)
     msg.set_content(msgtxt, subtype='html')
     # msg.add_alternative(message_text, subtype='plain')
     msg['Subject'] = subject
@@ -187,7 +193,9 @@ def getUserDetails(userId: str, detail: str, db: Session):
         (orm_model.User.id == userId) | (orm_model.User.unique_id == userId)).first()
     if (data is None):
 
-        raise HTTPException(status_code=401, detail="USER ID NOT FOUND")
+        #raise HTTPException(status_code=401, detail="USER ID NOT FOUND")
+        message= {"message":"USER ID NOT FOUND"}
+        return JSONResponse(status_code=400, content=message)
     else:
         return getattr(data, detail)
 

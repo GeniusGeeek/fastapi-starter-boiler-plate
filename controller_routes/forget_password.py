@@ -20,4 +20,6 @@ def post_data(post_data_in: schema_model.forgotPassword, db: Session = Depends(g
        return check_email
     
   else:  
-       raise HTTPException(status_code=400, detail="an error occured")
+       #raise HTTPException(status_code=400, detail="an error occured")
+       message= {"message":"an error occured"}
+       return JSONResponse(status_code=400, content=message)

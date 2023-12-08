@@ -19,7 +19,9 @@ router = APIRouter()
 def register(user: schema_model.User, db: Session = Depends(get_db)):
     create_user = signup.check_email_exist(db, user.email)
     if(create_user):
-        raise HTTPException(status_code=400, detail="Email already registered")
+        #raise HTTPException(status_code=400, detail="Email already registered")
+        message= {"message":"Email already registered"}
+        return JSONResponse(status_code=400, content=message)
     else:
         return signup.create_user(user, db)
     
@@ -30,7 +32,9 @@ def sendVerify(email: str, db: Session = Depends(get_db)):
     if(create_user):
         return signup.sendVerifyModel(email, db)
     else:
-        raise HTTPException(status_code=400, detail="Email already registered")
+        #raise HTTPException(status_code=400, detail="Email already registered")
+        message= {"message":"Email already registered"}
+        return JSONResponse(status_code=400, content=message)
     
 @router.post('/verify_account',tags=["User Account"])
 def VerifyAcct(email: str, email_otp:str, db: Session = Depends(get_db)):
@@ -38,7 +42,9 @@ def VerifyAcct(email: str, email_otp:str, db: Session = Depends(get_db)):
     if(create_user):
         return signup.VerifyAcctModel(email, int(email_otp), db)
     else:
-        raise HTTPException(status_code=400, detail="Email does not exit")
+        #raise HTTPException(status_code=400, detail="Email does not exit")
+        message= {"message":"Email does not exit"}
+        return JSONResponse(status_code=400, content=message)
 
 @router.post('/gmail_auth_signup/{token_id}', tags=["Account auth"])
 def gmail_register(token_id: str, db: Session = Depends(get_db)):
@@ -49,7 +55,9 @@ def gmail_register(token_id: str, db: Session = Depends(get_db)):
     else:
       create_user = signup.check_email_exist(db, res['email'])
       if(create_user):
-        raise HTTPException(status_code=400, detail="Email already registered")
+        #raise HTTPException(status_code=400, detail="Email already registered")
+        message= {"message":"Email already registered"}
+        return JSONResponse(status_code=400, content=message)
       else:
         class googleUser(str, Enum):
             name = res['name']

@@ -41,7 +41,7 @@ def add_employee(description: str = Form(),image_file=Depends(utils.optional_upl
 def file_upload(description: Optional[str] = Form(None),image_file: UploadFile = File(None), db: Session = Depends(get_db)):
    if image_file:
 
-        image_file_data = upload_file(image_file)
+        image_file_data = utils.upload_file(image_file)
         if (image_file_data['message'] == "success"):
             return {"message":"Uploaded Successfuly","uploadpath":image_file['file_path'],"description":description}
         else:

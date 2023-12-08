@@ -22,10 +22,14 @@ def login(user_login_details: OAuth2PasswordRequestForm = Depends(), db: Session
   if (login_user):
         if (login_user == "0"):
 
-            raise HTTPException(status_code=400, detail="Account Deactivated")
+            #raise HTTPException(status_code=400, detail="Account Deactivated")
+            message= {"message":"Account Deactivated"}
+            return JSONResponse(status_code=400, content=message)
 
         elif (login_user == "User does not exit"):
-            raise HTTPException(status_code=400, detail="User does not exit")
+            #raise HTTPException(status_code=400, detail="User does not exit")
+            message= {"message":"User does not exit"}
+            return JSONResponse(status_code=400, content=message)
 
         else:
             if (utils.verify_password(user_login_details.password, login_user.hashed_password)):
@@ -36,10 +40,14 @@ def login(user_login_details: OAuth2PasswordRequestForm = Depends(), db: Session
                 return {"access_token": encoded_jwt, "message": "login successfull", "user_details": login_user, "token type": "bearer"}
 
             else:
-                raise HTTPException(status_code=400, detail="wrong password")
+                #raise HTTPException(status_code=400, detail="wrong password")
+                message= {"message":"wrong password"}
+                return JSONResponse(status_code=400, content=message)
 
   else:
-        raise HTTPException(status_code=400, detail="email does not exist")
+        #raise HTTPException(status_code=400, detail="email does not exist")
+        message= {"message":"email does not exist"}
+        return JSONResponse(status_code=400, content=message)
 
 
 
@@ -62,6 +70,8 @@ def gmail_login(token_id: str, db: Session = Depends(get_db)):
 
      
    else:  
-     raise HTTPException(status_code=400, detail="email does not exist")
+     #raise HTTPException(status_code=400, detail="email does not exist")
+     message= {"message":"email does not exist"}
+     return JSONResponse(status_code=400, content=message)
 
 
