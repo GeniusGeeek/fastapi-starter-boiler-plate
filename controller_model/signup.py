@@ -6,7 +6,7 @@ import time
 from datetime import datetime
 
 
-from myutils import app
+from app_utils import utils
 
 import smtplib
 from email.message import EmailMessage
@@ -18,7 +18,7 @@ from email.message import EmailMessage
 def create_user(user_details: schema_model.User, db: Session):
     rand_num = random.randint(100000, 999999)
     account_hash_str = str(time.time()) + str(rand_num)
-    account_hash = app.generate_account_hash(account_hash_str) #used for password reset 
+    account_hash = utils.generate_account_hash(account_hash_str) #used for password reset 
     receiver_email = user_details.email
     otp_toSend = random.randint(1000,9999)
     generate_unique_id = None
@@ -33,7 +33,7 @@ def create_user(user_details: schema_model.User, db: Session):
         else:
             break
     add_user = orm_model.User(
-        hashed_password=app.hash_password(user_details.password),
+        hashed_password=utils.hash_password(user_details.password),
         username=user_details.username,
         email=user_details.email,
         name=user_details.name,
@@ -52,7 +52,7 @@ def create_user(user_details: schema_model.User, db: Session):
     db.commit()
     db.refresh(add_user)
     #send_mail(receiver_email)
-    app.send_mail("mailServer", "sender", "password", receiver_email,"Welcome, Use the following OTP to verify your account, OTP: "+str(otp_toSend), "Welcome to Fast API")
+    utils.send_mail("mailServer", "sender", "password", receiver_email,"Welcome, Use the following OTP to verify your account, OTP: "+str(otp_toSend), "Welcome to Fast API")
     return {"message":"Registeration successful"}
 
 
@@ -66,7 +66,7 @@ def sendVerifyModel(email, db):
         data.email_otp = otp_toSend
         db.commit()
         db.refresh(data)
-        app.send_mail("mailServer", "sender", "password", receiver_email,"Hi, Use the following OTP to verify your account, OTP: "+str(otp_toSend), "FAST API Verify Account")
+        utils.send_mail("mailServer", "sender", "password", receiver_email,"Hi, Use the following OTP to verify your account, OTP: "+str(otp_toSend), "FAST API Verify Account")
         return {"message": "Verification Code sent successfully"}
 
     else:
@@ -99,7 +99,7 @@ def VerifyAcctModel(email, email_otp, db):
 def create_user_from_google_auth(user_details, db: Session):
     rand_num = random.randint(100000, 999999)
     account_hash_str = str(time.time()) + str(rand_num)
-    account_hash = app.generate_account_hash(account_hash_str) #used for password reset 
+    account_hash = utils.generate_account_hash(account_hash_str) #used for password reset 
     receiver_email = user_details.email
     add_user = orm_model.User(
         username=user_details.username,
@@ -111,7 +111,7 @@ def create_user_from_google_auth(user_details, db: Session):
     db.commit()
     db.refresh(add_user)
     #send_mail(receiver_email)
-    app.send_mail("mailServer", "sender", "password", receiver_email,"Welcome, Use the following OTP to verify your account, OTP: "+str(otp_toSend), "Welcome to Fast API")
+    utils.send_mail("mailServer", "sender", "password", receiver_email,"Welcome, Use the following OTP to verify your account, OTP: "+str(otp_toSend), "Welcome to Fast API")
     return {"message":"Registeration successful"}
    
 
@@ -148,7 +148,7 @@ def send_mail(address_to):
 
 def reset_password(user: schema_model.resetPassword, db: Session):
     data = db.query(orm_model.User).filter(orm_model.User.email == user.email).first()
-    data.hashed_password = app.hash_password(user.new_password)
+    data.hashed_password = utils.hash_password(user.new_password)
     db.commit()
     db.refresh(data)
     return {"message": "Password reset successfull"}
@@ -158,7 +158,7 @@ def reset_password(user: schema_model.resetPassword, db: Session):
 def change_password(user: schema_model.changePassword, db: Session):
     data = db.query(orm_model.User).filter(
         orm_model.User.unique_id == user.unique_id).first()
-    data.hashed_password = app.hash_password(user.new_password)
+    data.hashed_password = utils.hash_password(user.new_password)
     db.commit()
     db.refresh(data)
     return {"message": "Password changed successfull"}

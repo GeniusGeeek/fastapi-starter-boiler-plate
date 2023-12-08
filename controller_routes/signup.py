@@ -1,5 +1,5 @@
 from controller_model import signup
-from myutils.master_imports import *
+from app_utils.master_imports import *
 from fastapi import FastAPI
 import requests
 from enum import Enum

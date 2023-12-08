@@ -1,7 +1,7 @@
 from sqlalchemy.orm import Session
 from models import orm_model, schema_model
 import random
-from myutils import app
+from app_utils import utils
 
 
 def login_email(email: str, db: Session):
@@ -27,7 +27,7 @@ def forgotPassModel(email, db:Session):
         data.email_otp = otp_toSend
         db.commit()
         db.refresh(data)
-        app.send_mail("server", "senderAddress", "password", receiver_email,
+        utils.send_mail("server", "senderAddress", "password", receiver_email,
                       "Hi, Use the following OTP to reset your account password, OTP: "+str(otp_toSend), "Reset Account password")
         return {"message": "Reset Code sent successfully"}
 

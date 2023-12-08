@@ -1,8 +1,8 @@
-from myutils.master_imports import *
+from app_utils.master_imports import *
 from controller_model import  signin
 
 from fastapi.security import OAuth2PasswordRequestForm
-from myutils import app  
+from app_utils import utils  
 import requests
 
 
@@ -28,11 +28,11 @@ def login(user_login_details: OAuth2PasswordRequestForm = Depends(), db: Session
             raise HTTPException(status_code=400, detail="User does not exit")
 
         else:
-            if (app.verify_password(user_login_details.password, login_user.hashed_password)):
+            if (utils.verify_password(user_login_details.password, login_user.hashed_password)):
                 data = {"sub": login_user.id}
-                jwt_exp_time = app.timedelta(
+                jwt_exp_time = utils.timedelta(
                     minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
-                encoded_jwt = app.create_jwt_token(data, jwt_exp_time)
+                encoded_jwt = utils.create_jwt_token(data, jwt_exp_time)
                 return {"access_token": encoded_jwt, "message": "login successfull", "user_details": login_user, "token type": "bearer"}
 
             else:
@@ -56,8 +56,8 @@ def gmail_login(token_id: str, db: Session = Depends(get_db)):
 
    if(login_user):
        data = {"sub": login_user.id}
-       jwt_exp_time = app.timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
-       encoded_jwt = app.create_jwt_token(data, jwt_exp_time)
+       jwt_exp_time = utils.timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
+       encoded_jwt = utils.create_jwt_token(data, jwt_exp_time)
        return {"access_token": encoded_jwt, "message": "login successfull", "user_details": login_user, "token type": "bearer"}
 
      

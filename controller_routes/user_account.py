@@ -1,6 +1,6 @@
-from myutils.master_imports import *
+from app_utils.master_imports import *
 
-from myutils.app import auth_user_request, getUserDetails
+from app_utils.utils import auth_user_request, getUserDetails
 from controller_model import user_accountModel
 from fastapi import Form
 

@@ -1,6 +1,6 @@
-from myutils.master_imports import *
+from app_utils.master_imports import *
 #from controller_model import custom_model
-from myutils.app import auth_user_request, getUserDetails
+from app_utils.utils import auth_user_request, getUserDetails
 
 
 
