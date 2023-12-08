@@ -15,7 +15,7 @@ router = APIRouter()
 
 
 
-@router.post("/uploadFile", summary="Upload file along with other form data", tags=["App Utils"])
+@router.post("/upload-file", summary="Upload file along with other form data", tags=["App Utils"])
 def file_upload(description: str = Form("write default content or leave blank without quotes"),image_file=Depends(utils.upload_file), db: Session = Depends(get_db)):
   if (image_file['message'] == "success"):
       return {"message":"Uploaded Successfuly","uploadpath":image_file['file_path'],"description":description}
@@ -23,7 +23,7 @@ def file_upload(description: str = Form("write default content or leave blank wi
       return {"message":"error occured"+ str(image_file)}
     
 
-@router.post("/uploadFileOptional", summary="Upload Optional file", tags=["App Utils"])
+@router.post("/upload-optional-file", summary="Upload Optional file", tags=["App Utils"])
 def add_employee(description: str = Form(),image_file=Depends(utils.optional_upload_file), db: Session = Depends(get_db)):
     if image_file is not None:
 
@@ -52,7 +52,7 @@ def file_upload(description: Optional[str] = Form(None),image_file: UploadFile =
         return {"message": description}
       
       
-@router.post("/upload_multiple_files", summary="Upload fmultiple files", tags=["App Utils"])
+@router.post("/upload-multiple-files", summary="Upload fmultiple files", tags=["App Utils"])
 def file_upload(image_file=Depends(utils.upload_multiple_files), db: Session = Depends(get_db)):
   if (image_file['message'] == "success"):
       return {"message":"Uploaded Successfuly","uploadpath":image_file['file_paths']}
@@ -61,8 +61,8 @@ def file_upload(image_file=Depends(utils.upload_multiple_files), db: Session = D
   
   
 
-@router.post("/send_email", summary="Send email", tags=["App Utils"])
-def send_mail(request=Depends(utils.auth_user_request)):
+@router.post("/send-email", summary="Send email", tags=["App Utils"])
+def send_mail(token=Depends(utils.auth_user_request)):
     response = utils.send_mail("mail server","senderemail@mail.com","sender email password","receipient email","message", "subject")
     return {"message": response}
   

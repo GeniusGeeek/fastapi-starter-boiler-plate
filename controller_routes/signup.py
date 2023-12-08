@@ -36,7 +36,7 @@ def resendVerify(email: str, db: Session = Depends(get_db)):
         message= {"message":"Email not found"}
         return JSONResponse(status_code=400, content=message)
     
-@router.post('/verify_account',tags=["User Account"])
+@router.post('/verify-account',tags=["User Account"])
 def VerifyAcct(email: str, email_otp:str, db: Session = Depends(get_db)):
     create_user = signup.check_email_exist(db, email)
     if(create_user):
@@ -46,7 +46,7 @@ def VerifyAcct(email: str, email_otp:str, db: Session = Depends(get_db)):
         message= {"message":"Email does not exit"}
         return JSONResponse(status_code=400, content=message)
 
-@router.post('/gmail_auth_signup/{token_id}', tags=["Account auth"])
+@router.post('/gmail-auth-signup/{token_id}', tags=["Account auth"])
 def gmail_register(token_id: str, db: Session = Depends(get_db)):
     response = requests.get("https://oauth2.googleapis.com/tokeninfo?id_token="+ token_id)
     res = response.json()

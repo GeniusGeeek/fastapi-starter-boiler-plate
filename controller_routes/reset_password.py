@@ -11,7 +11,7 @@ from app_utils import utils
 router = APIRouter()
 
 
-@router.post("/reset_password", summary="user reset password", tags=["User Account"])
+@router.post("/reset-password", summary="user reset password", tags=["User Account"])
 def post_data(post_data_in: schema_model.resetPassword, db: Session = Depends(get_db)):
   get_reset_code = signin.login_email(post_data_in.email, db)
   if(get_reset_code is not None):
@@ -34,10 +34,10 @@ def post_data(post_data_in: schema_model.resetPassword, db: Session = Depends(ge
       
       
  
-@router.post("/change_password", summary="user change password", tags=["User Account"])
-def post_data(post_data_in: schema_model.changePassword, db: Session = Depends(get_db), request=Depends(utils.auth_user_request)):
+@router.post("/change-password", summary="user change password", tags=["User Account"])
+def post_data(post_data_in: schema_model.changePassword, db: Session = Depends(get_db), token=Depends(utils.auth_user_request)):
 
-    unique_id = utils.getUserDetails(request['sub'], "unique_id", db)
+    unique_id = utils.getUserDetails(token['sub'], "unique_id", db)
     if (unique_id == post_data_in.unique_id):
         response = signup.change_password(post_data_in, db)
         return response

@@ -51,7 +51,7 @@ def login(user_login_details: OAuth2PasswordRequestForm = Depends(), db: Session
 
 
 
-@router.post("/gmail_auth_signin", summary="user gmail auth login" )
+@router.post("/gmail-auth-signin", summary="user gmail auth login" )
 def gmail_login(token_id: str, db: Session = Depends(get_db)):
   response = requests.get("https://oauth2.googleapis.com/tokeninfo?id_token="+ token_id)
   res = response.json()

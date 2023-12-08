@@ -11,7 +11,7 @@ import random
 router = APIRouter()
 
 
-@router.post("/forget_password", summary="user forget password", tags=["User Account"])
+@router.post("/forget-password", summary="user forget password", tags=["User Account"])
 def post_data(post_data_in: schema_model.forgotPassword, db: Session = Depends(get_db)):
   check_email = signin.forgotPassModel(post_data_in.email, db)
  
