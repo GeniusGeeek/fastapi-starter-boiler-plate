@@ -24,7 +24,7 @@ def file_upload(description: str = Form("write default content or leave blank wi
     
 
 @router.post("/upload-optional-file", summary="Upload Optional file", tags=["App Utils"])
-def add_employee(description: str = Form(),image_file=Depends(utils.optional_upload_file), db: Session = Depends(get_db)):
+def file_upload(description: str = Form(),image_file=Depends(utils.optional_upload_file), db: Session = Depends(get_db)):
     if image_file is not None:
 
         if (image_file['message'] == "success"):
