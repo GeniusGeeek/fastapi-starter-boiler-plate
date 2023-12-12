@@ -67,13 +67,16 @@ def send_mail(token=Depends(utils.auth_user_request)):
     return {"message": response}
   
   
-@router.get("/staticfiles", summary="get and download static files", tags=["App Utils"])
+@router.get("/static-files", summary="get and download static files", tags=["App Utils"])
 def static_files(filename:str):
-    #file_path = os.path.join(path, "uploadedDir/filename.jpg")
-    #if os.path.exists(file_path):
+
+    file_path = "uploads/"+filename
+    if os.path.exists(file_path):
         #return FileResponse(file_path, media_type="image/jpeg", filename="mycat.jpg")
-    #return {"error": "File not found!"}
-    return FileResponse("uploads/"+filename)
+        return FileResponse("uploads/"+filename)
+    else:
+      return {"error": "File not found!"}
+    
   
     
   
