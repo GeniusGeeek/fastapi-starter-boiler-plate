@@ -63,7 +63,8 @@ def file_upload(image_file=Depends(utils.upload_multiple_files), db: Session = D
 
 @router.post("/send-email", summary="Send email", tags=["App Utils"])
 def send_mail(token=Depends(utils.auth_user_request)):
-    response = utils.send_mail("mail server","senderemail@mail.com","sender email password","receipient email","message", "subject")
+    #email details are imported from master_imports.py
+    response = utils.send_mail(email_host,email_address,email_password,"receipient email","message", "subject"email_port)
     return {"message": response}
   
   
