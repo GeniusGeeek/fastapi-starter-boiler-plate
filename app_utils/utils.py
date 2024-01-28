@@ -153,7 +153,7 @@ def auth_user_request(token: str = Depends(outh2_scheme)):
     return decoded_jwt
 
 
-def send_mail(server, sender, password, receipient, message, subject):
+def send_mail(server, sender, password, receipient, message, subject,port):
 
     msg = EmailMessage()
     fromaddr = sender
@@ -169,12 +169,19 @@ def send_mail(server, sender, password, receipient, message, subject):
     try:
 
         # smtpObj = smtplib.SMTP('localhost') if localohost
-        # use smtplib.SMTP() if port is 587
-        with smtplib.SMTP_SSL(server, 465) as smtp:
-            # smtp.starttls() if port is 587
+        if(port == 465):
+         with smtplib.SMTP_SSL(server, 465) as smtp:
             smtp.login(fromaddr, password)
             smtp.send_message(msg)
-            return {"message": "sent mail"}
+            return {"message": "email sent successfully"}
+        
+        if(port == 587):
+            with smtplib.SMTP(server, 587) as smtp:
+             smtp.starttls() 
+             smtp.login(fromaddr, password)
+             smtp.send_message(msg)
+             return {"message": "email sent successfully"}
+
 
     # except smtplib.SMTPException:
     except Exception as e:
