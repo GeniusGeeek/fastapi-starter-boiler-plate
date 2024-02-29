@@ -1,3 +1,4 @@
+import master_imports
 import smtplib
 from email.message import EmailMessage
 from fastapi.middleware.cors import CORSMiddleware
@@ -14,6 +15,7 @@ from sqlalchemy.orm import Session
 from models import orm_model, schema_model
 import random
 import os
+import grp
 from typing import List
 import string
 import time
@@ -58,10 +60,20 @@ def upload_file(file: UploadFile):
         return {"message": "file not a valid type for upload, valid type is image"}
     # if (len(file) > 2000000):
         # return {"message":"file is too large, limit is  1mb"}
+    destination_path = "uploads/"
+
+    #to avoid write permision error in live server
+    if master_imports.environment == "production":
+                    current_permissions = os.stat(destination_path).st_mode & 0o777
+                    if current_permissions != 0o777:
+                        os.chmod(destination_path, 0o777)  # Change permissions to 777
+                    # www_data_gid = grp.getgrnam("www-data").gr_gid
+                    # current_group = os.stat(destination_path).st_gid
+                    # if current_group != www_data_gid:
+                    #     os.chown(destination_path, -1, www_data_gid)  # Change group ownership to www-data
 
     try:
         file_contents = file.file.read()
-        destination_path = "uploads/"
         filename = file.filename.split(".")[0]
         filenameExtention = file.filename.split(".").pop()
         modifiedfilename = filename + \
@@ -76,7 +88,7 @@ def upload_file(file: UploadFile):
                 return {"message": "success", "file_path": destination_path+modifiedfilename}
 
     except Exception as e:
-        return {"message": e}
+        return {"message": str(e)}
 
     finally:
         file.file.close()
