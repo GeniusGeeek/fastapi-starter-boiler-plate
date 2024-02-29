@@ -1,4 +1,3 @@
-import master_imports
 import smtplib
 from email.message import EmailMessage
 from fastapi.middleware.cors import CORSMiddleware
@@ -15,7 +14,6 @@ from sqlalchemy.orm import Session
 from models import orm_model, schema_model
 import random
 import os
-import grp
 from typing import List
 import string
 import time
@@ -60,20 +58,10 @@ def upload_file(file: UploadFile):
         return {"message": "file not a valid type for upload, valid type is image"}
     # if (len(file) > 2000000):
         # return {"message":"file is too large, limit is  1mb"}
-    destination_path = "uploads/"
-
-    #to avoid write permision error in live server
-    if master_imports.environment == "production":
-                    current_permissions = os.stat(destination_path).st_mode & 0o777
-                    if current_permissions != 0o777:
-                        os.chmod(destination_path, 0o777)  # Change permissions to 777
-                    # www_data_gid = grp.getgrnam("www-data").gr_gid
-                    # current_group = os.stat(destination_path).st_gid
-                    # if current_group != www_data_gid:
-                    #     os.chown(destination_path, -1, www_data_gid)  # Change group ownership to www-data
 
     try:
         file_contents = file.file.read()
+        destination_path = "uploads/"
         filename = file.filename.split(".")[0]
         filenameExtention = file.filename.split(".").pop()
         modifiedfilename = filename + \
@@ -165,14 +153,16 @@ def auth_user_request(token: str = Depends(outh2_scheme)):
     return decoded_jwt
 
 
-def send_mail(server, sender, password, receipient, message, subject,port):
+def send_mail(server, sender, password, receipient, message, subject):
 
     msg = EmailMessage()
     fromaddr = sender
     toaddrs = receipient
+    msg = "This is a test email with HTML formatting."
+    msg = message
     msgtxt = """<html><body><h1>Hello World!</h1><p>{message}</p></body></html>"""
-    msg_body = msgtxt.format(message=message)
-    msg.set_content(msg_body, subtype='html')
+    msgtxt = msgtxt.format(message=message)
+    msg.set_content(msgtxt, subtype='html')
     # msg.add_alternative(message_text, subtype='plain')
     msg['Subject'] = subject
     msg['From'] = fromaddr
@@ -181,19 +171,12 @@ def send_mail(server, sender, password, receipient, message, subject,port):
     try:
 
         # smtpObj = smtplib.SMTP('localhost') if localohost
-        if(port == 465):
-         with smtplib.SMTP_SSL(server, 465) as smtp:
+        # use smtplib.SMTP() if port is 587
+        with smtplib.SMTP_SSL(server, 465) as smtp:
+            # smtp.starttls() if port is 587
             smtp.login(fromaddr, password)
             smtp.send_message(msg)
-            return {"message": "email sent successfully"}
-        
-        if(port == 587):
-            with smtplib.SMTP(server, 587) as smtp:
-             smtp.starttls() 
-             smtp.login(fromaddr, password)
-             smtp.send_message(msg)
-             return {"message": "email sent successfully"}
-
+            return {"message": "sent mail"}
 
     # except smtplib.SMTPException:
     except Exception as e:
