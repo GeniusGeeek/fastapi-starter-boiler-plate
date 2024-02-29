@@ -18,7 +18,7 @@ This Boilerplate has basics utililities needed for building REST APIs without mu
 - Email Sending
 - Password hashing
 - User Account hashing
-- File Upload
+- File Upload and Download
  
 
 ## Installation

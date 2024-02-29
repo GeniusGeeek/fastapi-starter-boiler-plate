@@ -13,6 +13,10 @@ load_dotenv()
 # Access environment variables
 environment = os.getenv("ENVIRONMENT")
 domain_name = os.getenv("DOMAIN_NAME")
-
+email_password = "password"
+email_host = "host.domain.com"
+email_address = "username@domain.com"
+email_port = 465
+some_api_keys = "apikey"
 
 

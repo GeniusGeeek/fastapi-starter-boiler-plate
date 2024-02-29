@@ -24,7 +24,7 @@ def file_upload(description: str = Form("write default content or leave blank wi
     
 
 @router.post("/upload-optional-file", summary="Upload Optional file", tags=["App Utils"])
-def add_employee(description: str = Form(),image_file=Depends(utils.optional_upload_file), db: Session = Depends(get_db)):
+def file_upload(description: str = Form(),image_file=Depends(utils.optional_upload_file), db: Session = Depends(get_db)):
     if image_file is not None:
 
         if (image_file['message'] == "success"):
@@ -63,17 +63,21 @@ def file_upload(image_file=Depends(utils.upload_multiple_files), db: Session = D
 
 @router.post("/send-email", summary="Send email", tags=["App Utils"])
 def send_mail(token=Depends(utils.auth_user_request)):
-    response = utils.send_mail("mail server","senderemail@mail.com","sender email password","receipient email","message", "subject")
+    #email details are imported from master_imports.py
+    response = utils.send_mail(email_host,email_address,email_password,"receipient email","message", "subject"email_port)
     return {"message": response}
   
   
-@router.get("/staticfiles", summary="get and download static files", tags=["App Utils"])
+@router.get("/static-files", summary="get and download static files", tags=["App Utils"])
 def static_files(filename:str):
-    #file_path = os.path.join(path, "uploadedDir/filename.jpg")
-    #if os.path.exists(file_path):
+
+    file_path = "uploads/"+filename
+    if os.path.exists(file_path):
         #return FileResponse(file_path, media_type="image/jpeg", filename="mycat.jpg")
-    #return {"error": "File not found!"}
-    return FileResponse("uploads/"+filename)
+        return FileResponse("uploads/"+filename)
+    else:
+      return {"error": "File not found!"}
+    
   
     
   
