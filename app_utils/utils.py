@@ -158,8 +158,6 @@ def send_mail(server, sender, password, receipient, message, subject):
     msg = EmailMessage()
     fromaddr = sender
     toaddrs = receipient
-    msg = "This is a test email with HTML formatting."
-    msg = message
     msgtxt = """<html><body><h1>Hello World!</h1><p>{message}</p></body></html>"""
     msgtxt = msgtxt.format(message=message)
     msg.set_content(msgtxt, subtype='html')

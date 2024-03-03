@@ -21,4 +21,4 @@ def post_data(details: schema_model.user_login, db: Session = Depends(get_db), t
   else:
     return{"message":"Invalid user made this request"}
   
-  
+ 

@@ -21,6 +21,11 @@ docs: https://www.tutorialspoint.com/sqlalchemy/sqlalchemy_orm_filter_operators.
      data =  db.query(orm_model.modelName).all()
      return data
   
+#READ AND LOAD RESULT WITH PAGINATION, PAGINATION PAGE COUNT SOULD START FROM 1
+    searchterm = "%{}%".format(search_data)
+    offset = (page - 1) * 20
+    result = db.query(orm_model.modelName).filter(orm_model.modelName.colunname.like(searchterm)).order_by(orm_model.modelName.id.desc()).offset(offset).limit(20).all()
+    return result
   
  #Order By READ/SELECT multiple data:
      from sqlalchemy.sql import func
