@@ -8,7 +8,7 @@ def login_email(email: str, db: Session):
     data = db.query(orm_model.User).filter(
         orm_model.User.email == email).first()
     if (data is not None):
-        if (data.accounted_deactiavted == True):
+        if (data.account_deactiavted == True):
             return "0"
         else:
             return data
