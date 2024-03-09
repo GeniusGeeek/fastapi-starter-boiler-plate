@@ -191,9 +191,8 @@ def getUserDetails(userId: str, detail: str, db: Session):
         (orm_model.User.id == userId) | (orm_model.User.unique_id == userId)).first()
     if (data is None):
 
-        #raise HTTPException(status_code=401, detail="USER ID NOT FOUND")
-        message= {"message":"USER ID NOT FOUND"}
-        return JSONResponse(status_code=400, content=message)
+        raise HTTPException(status_code=401, detail="USER ID NOT FOUND")
+        
     else:
         return getattr(data, detail)
 
