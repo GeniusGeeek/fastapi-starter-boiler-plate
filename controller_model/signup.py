@@ -4,6 +4,7 @@ from passlib.context import CryptContext
 import random
 import time
 from datetime import datetime
+from app_utils import master_imports 
 
 
 from app_utils import utils
@@ -52,7 +53,7 @@ def create_user(user_details: schema_model.User, db: Session):
     db.commit()
     db.refresh(add_user)
     #send_mail(receiver_email)
-    utils.send_mail("mailServer", "sender", "password", receiver_email,"Welcome, Use the following OTP to verify your account, OTP: "+str(otp_toSend), "Welcome to Fast API")
+    utils.send_mail(master_imports.email_host, master_imports.email_address, master_imports.email_password, receiver_email,"Welcome, Use the following OTP to verify your account, OTP: "+str(otp_toSend), "Welcome to Fast API")
     return {"message":"Registeration successful"}
 
 

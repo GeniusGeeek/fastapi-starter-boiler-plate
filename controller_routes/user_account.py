@@ -27,7 +27,7 @@ def delete_user(unique_id, db: Session = Depends(get_db), token=Depends(auth_use
 
 
 
-@router.post("/deactivate-account", summary="deactivate student account", tags=["User Account"])
+@router.post("/deactivate-account", summary="deactivate user account", tags=["User Account"])
 def editProfile(user_unique_id: int, db: Session = Depends(get_db), token=Depends(auth_user_request)):
     unique_id = getUserDetails(token['sub'], "unique_id", db)
     if (str(unique_id) == (user_unique_id)):
