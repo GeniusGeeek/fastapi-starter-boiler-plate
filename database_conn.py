@@ -12,7 +12,7 @@ SQLALCHEMY_DATABASE_URL = "mysql+mysqlconnector://root@localhost:3306/fastapi_st
 
 engine = create_engine(
     SQLALCHEMY_DATABASE_URL,
-    echo=True
+    #echo=True
 )
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
