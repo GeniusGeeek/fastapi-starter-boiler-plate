@@ -32,7 +32,7 @@ note: (do not create tables,running migrations willdo that)
 
 3. OPTIONAL: change DB url definations in database_conn.py and alembic.ini if needed according to your db name and settings
 
-4. Install Requirements
+4. Install Requirements (note: if you have errors in installing any of the requirements you may either remove version specification, turn on a VPN. You may also comment the package if it is not a core FastAPI)
 ** pip3 install -r requirements.txt
 
 5. Run Application
