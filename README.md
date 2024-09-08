@@ -58,10 +58,11 @@ pip3 install mysql-connector-python
 ```bash 
 pip3 install alembic
 ```
-5. Install other Requirements
+5. Install other Requirements (note: if you have errors in installing any of the requirements you may either remove version specification or use a VPN. You may also comment out the package if it is not a core FastAPI)
 ```bash
 pip3 install -r requirements.txt
 ```
+
 
 
 ## B. Start Application
