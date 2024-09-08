@@ -50,7 +50,7 @@ pip3 install "fastapi[all]"
 ```bash 
 pip3 install SQLAlchemy
 ```
-3.  Install Mysql connection for python 
+3.  Install Mysql connection for python (note: This is a mySQL driver, you will need to install the driver for other databases you want to use that's not mySQL) 
 ```bash 
 pip3 install mysql-connector-python
 ```
