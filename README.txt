@@ -14,7 +14,7 @@ In project directory run the following two commands to create a virtual environm
 2. Install SQLAlchemy for ORM management
 ** pip3 install SQLAlchemy
 
-3.  Install Mysql connection for python 
+3.  Install Mysql connection for python (note: This is a mySQL driver, you will need to install the driver for other databases you want to use that's not mySQL) 
 ** pip3 install mysql-connector-python
 
 4. Install Alembic for Database Migrations
