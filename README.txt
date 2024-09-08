@@ -19,7 +19,7 @@ In project directory run the following two commands to create a virtual environm
 
 4. Install Alembic for Database Migrations
 ** pip3 install alembic
-** alembic init alembic --generates a new alembic directory
+
 
 B. Start Application
 
