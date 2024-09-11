@@ -199,6 +199,8 @@ def getUserDetails(userId: str, detail: str, db: Session):
 
 
 def convert_datestring_to_standard_format(date_string):
+    # ALWAYS USE THIS TO FORMAT DATESTRING TO BE SAVED TO DATABASE OR DATESTRING TO QUERY/COMPARE AGAINST DATESTRING IN DATABASE FOR COMPATILIBILITY ISSUES
+    # it will return the standard format based on the input some standard format are: YYYY-MM-DD HH:MM:SS YYYY-MM-DD
     # Remove invalid characters using a regular expression (allow only digits, slashes, and hyphens)
     if re.search(r'[^0-9/\- ]', date_string):
         raise HTTPException(
