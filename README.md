@@ -19,6 +19,9 @@ This Boilerplate has basics utililities needed for building REST APIs without mu
 - Password hashing
 - User Account hashing
 - File Upload and Download
+- Reusable examples for routes and CRUD/Model operations setup
+- CRUD model operations cheat sheet
+  
  
 
 ## Installation
@@ -58,7 +61,7 @@ pip3 install mysql-connector-python
 ```bash 
 pip3 install alembic
 ```
-5. Install other Requirements (note: if you have errors in installing any of the requirements you may either remove version specification or use a VPN. You may also comment out the package if it is not a core FastAPI)
+5. Install other Requirements (note: if you have errors in installing any of the requirements you may either remove version specification or use a VPN. You may also comment out the package if it is not a core FastAPI Package)
 ```bash
 pip3 install -r requirements.txt
 ```
