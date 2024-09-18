@@ -197,6 +197,21 @@ def getUserDetails(userId: str, detail: str, db: Session):
         return getattr(data, detail)
 
 
+def getTableDetailsByTableClassName(table_class_name,details, id: str, db: Session):
+    # Dynamically get the class from the module
+    table_class = getattr(orm_model, table_class_name)
+
+    data = db.query(table_class).filter(
+        table_class.id == id).first()
+    if (data is None):
+
+        raise HTTPException(
+            status_code=401, detail="ID NOT FOUND")
+
+    else:
+        return getattr(data, details)
+
+
 
 def convert_datestring_to_standard_format(date_string):
     # ALWAYS USE THIS TO FORMAT DATESTRING TO BE SAVED TO DATABASE OR DATESTRING TO QUERY/COMPARE AGAINST DATESTRING IN DATABASE FOR COMPATILIBILITY ISSUES
