@@ -1,0 +1,206 @@
+
+
+
+docs: https://www.tutorialspoint.com/sqlalchemy/sqlalchemy_orm_filter_operators.htm
+
+  return data
+
+#READ/SELECT single data: return result object of table equal condition (single row)
+   data = db.query(orm_model.modelName).filter(orm_model.modelName.property == condition).first()
+     return data
+     //if data is None:
+     
+     
+#READ/SELECT multiple data: return result object of table equal condition (multiple rows)
+    userId = auth_user.get('sub') // get id of authenticated user
+     data =  db.query(orm_model.modelName).filter(orm_model.modelName.property == condition).all()
+      //return data
+      //if data is None:
+
+#READ/SELECT multiple data: return all result object of table without any condition(multiple rows)
+     data =  db.query(orm_model.modelName).all()
+     return data
+  
+#READ AND LOAD RESULT WITH PAGINATION, PAGINATION PAGE COUNT SOULD START FROM 1
+    searchterm = "%{}%".format(search_data)
+    offset = (page - 1) * 20
+    result = db.query(orm_model.modelName).filter(orm_model.modelName.colunname.like(searchterm)).order_by(orm_model.modelName.id.desc()).offset(offset).limit(20).all()
+    return result
+  
+ #Order By READ/SELECT multiple data:
+     from sqlalchemy.sql import func
+     data =  db.query(orm_model.modelName).order_by(orm_model.modelName.id.desc()).all()
+     return data
+     #order by random:
+     Randomdata =  db.query(orm_model.modelName).order_by(func.rand()).all()
+     return Randomdata
+
+#Get last record
+    Lastdata =  db.query(orm_model.modelName).order_by(orm_model.modelName.id.desc()).first()
+     return Lastdata
+
+#Offset and Limit
+
+    limitData =  db.query(orm_model.modelName).filter(orm_model.modelName.property == condition).order_by(orm_model.modelName.id.desc()).limit(10).all()
+    return limitData
+
+    offsetData =  db.query(orm_model.modelName).filter(orm_model.modelName.property == condition).order_by(orm_model.modelName.id.desc()).offset(10)
+    return offsetData
+    
+    offsetDataWithLimit =  db.query(orm_model.modelName).filter(orm_model.modelName.property == condition).order_by(orm_model.modelName.id.desc()).offset(10).limit(20).all()
+    return offsetData
+    
+    
+
+     
+#ACCESS EACH LIST OF A READ DATA:
+    data =  db.query(orm_model.modelName).all()
+    return data
+    ##from here should be in controller_routes file
+    receivedData
+    for i in range(len(receivedData)):
+       receivedData[i].key = "custom value"
+    return receivedData
+      
+
+#INSERT/CREATE DATE
+data_to_add = orm_model.table(
+        column=data,
+        column=data,
+        column=data
+        
+    )
+    db.add(data_to_add)
+    db.commit()
+    db.refresh(data_to_add)
+
+#UPDATE DATA
+
+     try:
+     data = db.query(orm_model.modelName).filter(orm_model.modelName.property == condition).first()
+        if(data is not None):
+
+            data.column_to_update = newData
+            data.column_to_update1 = newData1
+
+            db.commit()
+            db.refresh(data)
+            return {"message": "update successful"}
+       else:
+            return {"message": "condition not found"}   
+
+      except Exception as e:
+         db.rollback()
+        return {"message": "An error occured: "+ str(e)}   
+      finally:
+        db.close()
+        
+ # Update all rows that match the condition     
+ try:
+    
+    db.query(orm_model.modelName).filter(orm_model.modelName.property == condition).update({
+        orm_model.modelName.column_to_update: newData,
+        orm_model.modelName.column_to_update1: newData1
+    })
+
+    # Commit the changes to the database
+    db.commit()
+    
+
+except Exception as e:
+    # Rollback the changes in case of an error
+    db.rollback()
+    
+    # Return an error message
+    return {"message": "An error occurred: " + str(e)}
+    
+finally:
+    # Close the database connection
+    db.close()
+
+
+#OR THIS TO UPDATE MULTIPLE RECORD
+data = db.query(orm_model.modelName).filter(orm_model.modelName.property == condition).all()
+ if(data is not None):
+
+     
+     for item in data:
+         item.column_to_update = newData
+         item.column_to_update1 = newData1
+         db.commit()
+     db.close()
+   
+    
+     return {"Message": "update successful"}
+else:
+     return {"message": "condition not found"}   
+
+
+
+ #DELETE DATA
+     data = db.query(orm_model.modelName).filter(orm_model.modelName.property == condition).first()
+       
+        if data is None:
+           return {not found}
+
+        else:
+          db.delete(data)
+          db.commit()  
+
+#DELETE MULTIPLE DATA
+     data = db.query(orm_model.modelName).filter(orm_model.modelName.property == condition).all()
+       
+        if data is None:
+           return {not found}
+
+        else:
+          for item in data:
+                db.delete(item)
+          db.commit()    
+
+#LIKE statment
+searchWord = "%{}%".format(searched_word)
+result = db.query(orm_model.modelName).filter(orm_model.modelName.property.like(searchWord)).all()
+for row in result:
+   print ("ID:", row.id, "Name: ",row.name, "Address:",row.address, "Email:",row.email)
+    
+
+#AND condition(seperated by comma)
+result = session.query(orm_model.modelName).filter(orm_model.modelName.property>2, Customers.name.like('Ra%'))
+for row in result:
+   print ("ID:", row.id, "Name: ",row.name, "Address:",row.address, "Email:",row.email)
+
+
+#OR condtion (using the () | () method)
+result = session.query(orm_model.modelName).filter((orm_model.modelName.property>2) | (Customers.name.like('Ra%')))
+
+for row in result:
+   print ("ID:", row.id, "Name: ",row.name, "Address:",row.address, "Email:",row.email)
+
+
+#IN statment
+
+result = session.query(orm_model.modelName).filter(orm_model.modelName.property.in_([1,3]))
+for row in result:
+   print ("ID:", row.id, "Name: ",row.name, "Address:",row.address, "Email:",row.email)
+
+#COUNT Number of ROW In table (eg user table)
+
+ data = db.query(orm_model.User).count()
+    return data
+
+#SUM VALUES IN A TABLE COLUMN (eg. is_admin column in User table)
+    from sqlalchemy import func
+    data = db.query(func.sum(orm_model.User.is_admin)).scalar()
+    return data
+    
+#CALLING db session within crud/model file or without dependency
+    from database_conn import SessionLocal
+    custom_db_session = SessionLocal()
+    
+    
+#group by
+data = db.query(orm_model.modelName).group_by(orm_model.modelName.property).all()
+return data
+
+
