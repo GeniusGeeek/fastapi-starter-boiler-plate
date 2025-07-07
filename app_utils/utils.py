@@ -18,6 +18,8 @@ from typing import List
 import string
 import time
 from fastapi.responses import JSONResponse
+import mimetypes
+from pathlib import Path
 
 
 outh2_scheme = OAuth2PasswordBearer(tokenUrl="signin")
@@ -96,7 +98,7 @@ def optional_upload_file(file:  Optional[UploadFile] = None):
                 buffer.write(file_contents)
                 return {"message": "success", "file_path": modifiedfilenameWithDir}
         else:
-                return {"message": "no file to upload"}
+            return {"message": "no file to upload"}
     except Exception as e:
         return {"message": e}
 
@@ -146,25 +148,17 @@ def auth_user_request(token: str = Depends(outh2_scheme)):
     # except JWTError as error:
         # return error
     except:
-        #raise credentials_exception
-        message= {"message":"Could not validate credentials"}
+        # raise credentials_exception
+        message = {"message": "Could not validate credentials"}
         return JSONResponse(status_code=400, content=message)
 
     return decoded_jwt
 
 
-def send_mail(server, sender, password, receipient, message, subject):
-
-    msg = EmailMessage()
-    fromaddr = sender
-    toaddrs = receipient
-    msgtxt = """<html><body><h1>Hello World!</h1><p>{message}</p></body></html>"""
-    msgtxt = msgtxt.format(message=message)
-    msg.set_content(msgtxt, subtype='html')
-    # msg.add_alternative(message_text, subtype='plain')
-    msg['Subject'] = subject
-    msg['From'] = fromaddr
-    msg['To'] = toaddrs
+def send_mail(server, sender, password, recipients_string, message, subject, email_port, attachments: list[str | tuple[str, bytes]] | None = None):
+    # recipients_string can be in this format address1@gmail.com or address1@gmail.com,address2@gmail.com...addressN@gmail.com
+    recipients = [email.strip()
+                  for email in recipients_string.split(',')]  # Convert to list
 
     try:
 
@@ -172,13 +166,51 @@ def send_mail(server, sender, password, receipient, message, subject):
         # use smtplib.SMTP() if port is 587
         with smtplib.SMTP_SSL(server, 465) as smtp:
             # smtp.starttls() if port is 587
+            fromaddr = sender
             smtp.login(fromaddr, password)
-            smtp.send_message(msg)
-            return {"message": "sent mail"}
+
+            for recipient in recipients:
+                msg = EmailMessage()
+
+                toaddrs = recipient
+                msgtxt = """<html><body><p>Good morning dear,</p><p>{message}</p></body></html>"""
+                msgtxt = msgtxt.format(message=message)
+                msg.set_content(msgtxt, subtype='html')
+                # msg.add_alternative(message_text, subtype='plain')
+                msg['Subject'] = subject
+                msg['From'] = fromaddr
+                msg['To'] = toaddrs
+
+                # ‑‑‑ Attach files (if any) ‑‑‑
+                if attachments:
+                    for item in attachments:
+                        if isinstance(item, tuple):
+                            #   (filename, bytes) form
+                            filename, data = item
+                            maintype, subtype = "application", "octet-stream"
+                        else:
+                            #   path‑string form
+                            path = Path(item)
+                            filename = path.name
+                            data = path.read_bytes()
+                            # guess mime‑type
+                            maintype, subtype = mimetypes.guess_type(filename)[
+                                0].split('/')
+
+                        msg.add_attachment(
+                            data,
+                            maintype=maintype,
+                            subtype=subtype,
+                            filename=filename
+                        )
+
+                smtp.send_message(msg)
+        return {"message": "sent mails"}
 
     # except smtplib.SMTPException:
     except Exception as e:
-        return {"message": "Problem Ocuured while sending email, mail not sent!", "error": e}
+        import traceback
+        return {"message": "Problem Ocuured while sending email, mail not sent!", "error": str(e), "trace": traceback.format_exc()}
 
 
 def generate_account_hash(unique_Str):
@@ -192,7 +224,7 @@ def getUserDetails(userId: str, detail: str, db: Session):
     if (data is None):
 
         raise HTTPException(status_code=401, detail="USER ID NOT FOUND")
-        
+
     else:
         return getattr(data, detail)
 
