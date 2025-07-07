@@ -14,6 +14,8 @@ def loadresult_withpagination(search_data: str, page:int, db: Session = Depends(
     def loadmore_more(search_data: str, page:int, db: Session):
         searchterm = "%{}%".format(search_data)
         page = int(page)
+        if (page < 1):
+            page = 1
         offset = (page - 1) * 20
         result = db.query(orm_model.User).filter(orm_model.User.name.like(searchterm)).order_by(orm_model.User.id.desc()).offset(offset).limit(20).all()
        

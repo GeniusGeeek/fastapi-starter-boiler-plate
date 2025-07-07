@@ -18,8 +18,10 @@ from typing import List
 import string
 import time
 from fastapi.responses import JSONResponse
+
 import mimetypes
 from pathlib import Path
+import re
 
 
 outh2_scheme = OAuth2PasswordBearer(tokenUrl="signin")
@@ -227,6 +229,67 @@ def getUserDetails(userId: str, detail: str, db: Session):
 
     else:
         return getattr(data, detail)
+
+
+def getTableDetailsByTableClassName(table_class_name,details, id: str, db: Session):
+    # Dynamically get the class from the module
+    table_class = getattr(orm_model, table_class_name)
+
+    data = db.query(table_class).filter(
+        table_class.id == id).first()
+    if (data is None):
+
+        raise HTTPException(
+            status_code=401, detail="ID NOT FOUND")
+
+    else:
+        return getattr(data, details)
+
+
+
+def convert_datestring_to_standard_format(date_string):
+    # ALWAYS USE THIS TO FORMAT DATESTRING TO BE SAVED TO DATABASE OR DATESTRING TO QUERY/COMPARE AGAINST DATESTRING IN DATABASE FOR COMPATILIBILITY ISSUES
+    # it will return the standard format based on the input some standard format are: YYYY-MM-DD HH:MM:SS YYYY-MM-DD
+    # Remove invalid characters using a regular expression (allow only digits, slashes, and hyphens)
+    if re.search(r'[^0-9/\- ]', date_string):
+        raise HTTPException(
+            status_code=401, detail="Date format not recognized")
+
+    # Try different common formats
+    possible_formats = [
+        ("%d/%m/%Y %H:%M:%S", "%Y-%m-%d %H:%M:%S"),
+        ("%d/%m/%Y", "%Y-%m-%d"),
+        ("%d-%m-%Y %H:%M:%S", "%Y-%m-%d %H:%M:%S"),
+        ("%d-%m-%Y", "%Y-%m-%d"),
+        ("%m/%Y/%d %H:%M:%S", "%Y-%m-%d %H:%M:%S"),
+        ("%m/%Y/%d", "%Y-%m-%d"),
+        ("%Y-%m-%d %H:%M:%S", "%Y-%m-%d %H:%M:%S"),
+        ("%Y-%m-%d", "%Y-%m-%d"),
+        ("%Y/%m/%d %H:%M:%S", "%Y-%m-%d %H:%M:%S"),
+        ("%Y/%m/%d", "%Y-%m-%d"),
+        ("%d/%Y/%m %H:%M:%S", "%Y-%m-%d %H:%M:%S"),
+        ("%d/%Y/%m", "%Y-%m-%d"),
+        # US-style (MM/DD/YYYY with time)
+        ("%m/%d/%Y %H:%M:%S", "%Y-%m-%d %H:%M:%S"),
+        ("%m/%d/%Y", "%Y-%m-%d"),                     # US-style (MM/DD/YYYY)
+        ("%d-%Y-%m %H:%M:%S", "%Y-%m-%d %H:%M:%S"),
+        ("%d-%Y-%m", "%Y-%m-%d"),
+        ("%d/%m/%Y %H:%M:%S.%f", "%Y-%m-%d %H:%M:%S.%f"),  # Include milliseconds
+        ("%d-%m-%Y %H:%M:%S.%f", "%Y-%m-%d %H:%M:%S.%f"),
+        ("%Y-%m-%d %H:%M:%S.%f", "%Y-%m-%d %H:%M:%S.%f"),
+    ]
+
+    # Try to parse with each format
+    for input_format, output_format in possible_formats:
+        try:
+            date_obj = datetime.strptime(date_string, input_format)
+            return date_obj.strftime(output_format)
+        except ValueError:
+            continue  # Try the next format if this one doesn't work
+
+    # If no formats match, raise an error
+    raise HTTPException(status_code=401, detail="Date format not recognized")
+
 
 
 def generate_unique_random_id():

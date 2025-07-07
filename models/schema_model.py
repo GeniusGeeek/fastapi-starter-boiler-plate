@@ -6,7 +6,7 @@ class User(BaseModel):
       name: str = Field(example="foo admin")
       username:str = Field(example="foo")
       password:str = Field(example="password")
-      referal_code:str = Field(example="122921")
+      referal_code:Optional[str] = Field(None,example="122921")
       country:str = Field(example="Nigeria")
       country_code:str = Field(example="+234")
       mobile_number:str = Field(example="90339***09")

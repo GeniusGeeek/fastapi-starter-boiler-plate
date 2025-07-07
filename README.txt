@@ -14,12 +14,12 @@ In project directory run the following two commands to create a virtual environm
 2. Install SQLAlchemy for ORM management
 ** pip3 install SQLAlchemy
 
-3.  Install Mysql connection for python 
+3.  Install Mysql connection for python (note: This is a mySQL driver, you will need to install the driver for other databases you want to use that's not mySQL) 
 ** pip3 install mysql-connector-python
 
 4. Install Alembic for Database Migrations
 ** pip3 install alembic
-** alembic init alembic --generates a new alembic directory
+
 
 B. Start Application
 
@@ -32,7 +32,7 @@ note: (do not create tables,running migrations willdo that)
 
 3. OPTIONAL: change DB url definations in database_conn.py and alembic.ini if needed according to your db name and settings
 
-4. Install Requirements
+4. Install Requirements (note: if you have errors in installing any of the requirements you may either remove version specification, turn on a VPN. You may also comment the package if it is not a core FastAPI Package)
 ** pip3 install -r requirements.txt
 
 5. Run Application

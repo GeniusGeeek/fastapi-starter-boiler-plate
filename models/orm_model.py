@@ -2,6 +2,7 @@ from email.policy import default
 from sqlalchemy import Boolean, Column, ForeignKey, Integer, String
 from database_conn import Base
 from sqlalchemy.dialects.mysql import LONGTEXT
+from sqlalchemy import Text #for other databases to use a longtext type
 
 
 class User(Base):
