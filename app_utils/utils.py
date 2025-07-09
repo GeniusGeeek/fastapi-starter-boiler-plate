@@ -175,7 +175,7 @@ def send_mail(server, sender, password, recipients_string, message, subject, ema
                 msg = EmailMessage()
 
                 toaddrs = recipient
-                msgtxt = """<html><body><p>Good morning dear,</p><p>{message}</p></body></html>"""
+                msgtxt = """<html><body><p>Good day dear,</p><p>{message}</p></body></html>"""
                 msgtxt = msgtxt.format(message=message)
                 msg.set_content(msgtxt, subtype='html')
                 # msg.add_alternative(message_text, subtype='plain')
@@ -231,7 +231,7 @@ def getUserDetails(userId: str, detail: str, db: Session):
         return getattr(data, detail)
 
 
-def getTableDetailsByTableClassName(table_class_name,details, id: str, db: Session):
+def getTableDetailsByTableClassName(table_class_name, details, id: str, db: Session):
     # Dynamically get the class from the module
     table_class = getattr(orm_model, table_class_name)
 
@@ -244,7 +244,6 @@ def getTableDetailsByTableClassName(table_class_name,details, id: str, db: Sessi
 
     else:
         return getattr(data, details)
-
 
 
 def convert_datestring_to_standard_format(date_string):
@@ -289,7 +288,6 @@ def convert_datestring_to_standard_format(date_string):
 
     # If no formats match, raise an error
     raise HTTPException(status_code=401, detail="Date format not recognized")
-
 
 
 def generate_unique_random_id():

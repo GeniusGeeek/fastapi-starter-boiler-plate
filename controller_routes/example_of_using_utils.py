@@ -60,24 +60,17 @@ async def send_mail(file_attachment: UploadFile | None = File(None)):
     # email details are imported from master_imports.py
     attachments = []
     file_path = None
-    # file_path = Path("uploads/uploadedfile.txt")
     # note any of these file path sytnax will work when used below
+
+    # file_path = Path("uploads/uploadedfile.txt")
     # file_path = [
     #     Path("uploads/uploadedfile.txt"),
     #     Path("uploads/uploadedfile2.txt")
     # ]
     # file_path = ["uploads/uploadedfile.txt", "uploads/uploadedfile2.txt"]
 
-    message_body = """Thank you for your interest in our White Box Bug Bounty program.<br>
-
-    We are pleased to invite you to the next phase of our selection process. To proceed, kindly review the attached Non-Disclosure Agreement (NDA). This agreement is essential as it outlines the terms for handling our confidential information and infrastructure, which will be provided for the testing.<br>
-
-    Please sign, scan, and return the executed NDA at your earliest convenience. Upon receipt, we will promptly provide you with all necessary documentation and infrastructure access to commence the testing.<br>
-
-    We look forward to your participation.<br>
-
-    Sincerely, <br>
-    Rewod Technologies Limited
+    message_body = """Thank you for your interest in using FASTAPI boiler plate<br>
+    Created By Gracious Emmanuel
     """
 
     if file_path is not None:
@@ -93,7 +86,7 @@ async def send_mail(file_attachment: UploadFile | None = File(None)):
         attachments.append((file_attachment.filename, file_attachment_bytes))
     response = utils.send_mail(email_host, email_address, email_password,
 
-                               "graciousemmanuel52@gmail.com,rewodtechnologies@gmail.com", message_body, "White Box Bug Bounty Program: Next Steps & Non-Disclosure Agreement", email_port, attachments)
+                               "graciousemmanuel52@gmail.com,rewodtechnologies@gmail.com", message_body, "Welcome to FASTAPI Boiler Plate", email_port, attachments)
     return {"message": response}
 
 
