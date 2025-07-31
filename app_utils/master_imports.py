@@ -7,6 +7,9 @@ from database_conn import *
 orm_model.Base.metadata.create_all(bind=engine)
 from dotenv import load_dotenv
 import os
+#bcrypt.__about__ = bcrypt
+# or pip install "bcrypt==4.0.1" to fix bycrypt version issue
+
 
 # Load environment variables from .env file
 load_dotenv()
