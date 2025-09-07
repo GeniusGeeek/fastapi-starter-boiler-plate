@@ -77,7 +77,7 @@ data_to_add = orm_model.table(
 #UPDATE DATA
 
      try:
-     data = db.query(orm_model.modelName).filter(orm_model.modelName.property == condition).first()
+        data = db.query(orm_model.modelName).filter(orm_model.modelName.property == condition).first()
         if(data is not None):
 
             data.column_to_update = newData
@@ -86,12 +86,16 @@ data_to_add = orm_model.table(
             db.commit()
             db.refresh(data)
             return {"message": "update successful"}
-       else:
-            return {"message": "condition not found"}   
+        else:
+            content = {"message": "condition not found"}
+
+            return JSONResponse(status_code=401, content=content)  
 
       except Exception as e:
-         db.rollback()
-        return {"message": "An error occured: "+ str(e)}   
+        db.rollback()
+        content = {"message": "An error occured: "+ str(e)"}
+
+        return JSONResponse(status_code=401, content=content)      
       finally:
         db.close()
         
@@ -112,7 +116,11 @@ except Exception as e:
     db.rollback()
     
     # Return an error message
-    return {"message": "An error occurred: " + str(e)}
+    
+
+    content = {"message": "An error occured: "+ str(e)"}
+
+    return JSONResponse(status_code=401, content=content)   
     
 finally:
     # Close the database connection
@@ -141,7 +149,9 @@ else:
      data = db.query(orm_model.modelName).filter(orm_model.modelName.property == condition).first()
        
         if data is None:
-           return {not found}
+           content = {"message": "not found"}
+
+           return JSONResponse(status_code=401, content=content) 
 
         else:
           db.delete(data)
@@ -151,7 +161,9 @@ else:
      data = db.query(orm_model.modelName).filter(orm_model.modelName.property == condition).all()
        
         if data is None:
-           return {not found}
+           content = {"message": "not found"}
+
+           return JSONResponse(status_code=401, content=content) 
 
         else:
           for item in data:
