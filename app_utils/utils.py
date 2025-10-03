@@ -54,20 +54,20 @@ def create_jwt_token(data: dict, expires_delta: Optional[timedelta] = None):
         data_to_encode, SECRET_KEY, algorithm=ALGORITHM)
     return encoded_jwt_data
 
-# def upload_file(file:bytes=File(...)):
+# def upload_file(file_to_upload:bytes=File(...)):
 
 
-def upload_file(file: UploadFile):
-    if file.content_type not in ["image/jpeg", "image/png", "image/jpg"]:
-        return {"message": "file not a valid type for upload, valid type is image"}
+def upload_file(file_to_upload: UploadFile):
+    if file_to_upload.content_type not in ["image/jpeg", "image/png", "image/jpg", "application/pdf", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"]:
+        return {"message": "file not a valid type for upload"}
     # if (len(file) > 2000000):
         # return {"message":"file is too large, limit is  1mb"}
 
     try:
-        file_contents = file.file.read()
+        file_contents = file_to_upload.file_to_upload.read()
         destination_path = "uploads/"
-        filename = file.filename.split(".")[0]
-        filenameExtention = file.filename.split(".").pop()
+        filename = file_to_upload.filename.split(".")[0]
+        filenameExtention = file_to_upload.filename.split(".").pop()
         modifiedfilename = filename + \
             str(random.randint(100000, 999999))+"."+filenameExtention
         with open(destination_path+modifiedfilename, 'wb') as buffer:
@@ -83,16 +83,16 @@ def upload_file(file: UploadFile):
         return {"message": str(e)}
 
     finally:
-        file.file.close()
+        file_to_upload.file_to_upload.close()
 
 
-def optional_upload_file(file:  Optional[UploadFile] = None):
+def optional_upload_file(file_to_upload:  Optional[UploadFile] = None):
     try:
-        if (file is not None):
-            file_contents = file.file.read()
+        if (file_to_upload is not None):
+            file_contents = file_to_upload.file_to_upload.read()
             destination_path = "uploads/"
-            filename = file.filename.split(".")[0]
-            filenameExtention = file.filename.split(".").pop()
+            filename = file_to_upload.filename.split(".")[0]
+            filenameExtention = file_to_upload.filename.split(".").pop()
             modifiedfilename = filename + \
                 str(random.randint(100000, 999999))+"."+filenameExtention
             modifiedfilenameWithDir = destination_path+modifiedfilename
@@ -109,20 +109,20 @@ async def upload_multiple_files(files: List[UploadFile] = File(...)):
     try:
         uploaded_files = []
         for file in files:
-            if file.content_type not in ["image/jpeg", "image/png", "image/jpg"]:
-                return {"message": f"{file.filename} is not a valid type for upload, valid types are image/jpeg, image/png, image/jpg"}
+            if file_to_upload.content_type not in ["image/jpeg", "image/png", "image/jpg"]:
+                return {"message": f"{file_to_upload.filename} is not a valid type for upload, valid types are image/jpeg, image/png, image/jpg"}
 
-            file_contents = file.file.read()
+            file_contents = file_to_upload.file_to_upload.read()
             destination_path = "uploads/"
-            filename = file.filename.split(".")[0]
-            filenameExtention = file.filename.split(".").pop()
+            filename = file_to_upload.filename.split(".")[0]
+            filenameExtention = file_to_upload.filename.split(".").pop()
             modifiedfilename = filename + \
                 str(random.randint(100000, 999999))+"."+filenameExtention
             with open(destination_path+modifiedfilename, 'wb') as buffer:
                 buffer.write(file_contents)
                 if (os.path.getsize(destination_path+modifiedfilename) > 2000000):
                     os.remove(destination_path+modifiedfilename)
-                    return {"message": f"{file.filename} is too large, max size is 2mb"}
+                    return {"message": f"{file_to_upload.filename} is too large, max size is 2mb"}
 
                 else:
                     uploaded_files.append(destination_path+modifiedfilename)
@@ -134,7 +134,7 @@ async def upload_multiple_files(files: List[UploadFile] = File(...)):
 
     finally:
         for file in files:
-            file.file.close()
+            file_to_upload.file_to_upload.close()
 
 
 def auth_user_request(token: str = Depends(outh2_scheme)):
