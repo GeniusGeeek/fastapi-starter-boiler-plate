@@ -64,7 +64,7 @@ def upload_file(file_to_upload: UploadFile):
         # return {"message":"file is too large, limit is  1mb"}
 
     try:
-        file_contents = file_to_upload.file_to_upload.read()
+        file_contents = file_to_upload.read()
         destination_path = "uploads/"
         filename = file_to_upload.filename.split(".")[0]
         filenameExtention = file_to_upload.filename.split(".").pop()
@@ -83,13 +83,13 @@ def upload_file(file_to_upload: UploadFile):
         return {"message": str(e)}
 
     finally:
-        file_to_upload.file_to_upload.close()
+        file_to_upload.close()
 
 
 def optional_upload_file(file_to_upload:  Optional[UploadFile] = None):
     try:
         if (file_to_upload is not None):
-            file_contents = file_to_upload.file_to_upload.read()
+            file_contents = file_to_upload.read()
             destination_path = "uploads/"
             filename = file_to_upload.filename.split(".")[0]
             filenameExtention = file_to_upload.filename.split(".").pop()
@@ -112,7 +112,7 @@ async def upload_multiple_files(files: List[UploadFile] = File(...)):
             if file_to_upload.content_type not in ["image/jpeg", "image/png", "image/jpg"]:
                 return {"message": f"{file_to_upload.filename} is not a valid type for upload, valid types are image/jpeg, image/png, image/jpg"}
 
-            file_contents = file_to_upload.file_to_upload.read()
+            file_contents = file_to_upload.read()
             destination_path = "uploads/"
             filename = file_to_upload.filename.split(".")[0]
             filenameExtention = file_to_upload.filename.split(".").pop()
@@ -133,8 +133,8 @@ async def upload_multiple_files(files: List[UploadFile] = File(...)):
         return {"message": e}
 
     finally:
-        for file in files:
-            file_to_upload.file_to_upload.close()
+        for file_to_upload in files:
+            file_to_upload.close()
 
 
 def auth_user_request(token: str = Depends(outh2_scheme)):
