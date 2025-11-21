@@ -24,6 +24,7 @@ pydantic==1.9.2
 #pydantic==1.10.0a1
 PyJWT==2.4.0
 python-dotenv==0.20.0
+python-jose==3.5.0
 python-multipart==0.0.5
 PyYAML==6.0
 requests==2.28.1
