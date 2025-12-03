@@ -26,6 +26,50 @@ docs: https://www.tutorialspoint.com/sqlalchemy/sqlalchemy_orm_filter_operators.
     offset = (page - 1) * 20
     result = db.query(orm_model.modelName).filter(orm_model.modelName.colunname.like(searchterm)).order_by(orm_model.modelName.id.desc()).offset(offset).limit(20).all()
     return result
+
+
+#READ AND LOAD RESULT WITH PAGINATION AND PAGINATION DATA, PAGINATION PAGE COUNT SOULD START FROM 1
+    try:
+        page = int(page)
+    except:
+        page = 1
+
+    if page < 1:
+        page = 1
+
+    limit = 50
+    offset = (page - 1) * limit
+    searchterm = "%{}%".format(search_data)
+    
+    query = db.query(orm_model.modelName).filter(orm_model.modelName.colunname.like(searchterm))
+    # Count total records
+    total_records = query.count()
+    # Calculate pages
+    total_pages = (total_records + limit - 1) // limit  # ceiling division
+
+    # Fetch paginated results
+    results = query.offset(offset).limit(limit).all()
+
+    # Convert results to list of dicts
+    data = []
+    for r in results:
+        data.append({
+            "id": r.id,
+            "column_1": r.column_1,
+            "column_2": r.column_2,
+            "column_3": r.column_3,
+        })
+
+    return {
+        "current_page": page,
+        "page_size": limit,
+        "total_pages": total_pages,
+        "total_records": total_records,
+        "data": data
+    }
+
+    
+    return result
   
  #Order By READ/SELECT multiple data:
      from sqlalchemy.sql import func
