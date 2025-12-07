@@ -4,4 +4,5 @@ mysql-connector-python
 passlib
 PyJWT
 python-jose
+requests
 SQLAlchemy
