@@ -14,7 +14,7 @@ from sqlalchemy.orm import Session
 from models import orm_model, schema_model
 import random
 import os
-from typing import List
+from typing import List, Tuple, Union
 import string
 import time
 from fastapi.responses import JSONResponse
